@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { TwoStepSettings } from '@/components/TwoStepSettings';
 import { useAuth } from '@/context/AuthContext';
 import { formatDateTime } from '@/utils/format';
+import { AppearanceCard } from './AppearanceCard';
 import { PasswordCard } from './PasswordCard';
 import { ProfileCard } from './ProfileCard';
 import { cx } from '@/utils/cx';
@@ -52,6 +53,7 @@ export function AccountPage() {
         <ProfileCard />
         <PasswordCard />
       </div>
+      <AppearanceCard />
       <TwoStepSettings recoveryCodesLeft={recoveryCodesLeft} />
     </div>
   );

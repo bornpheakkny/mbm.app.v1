@@ -16,6 +16,14 @@ export interface User {
   mfaMethod: MfaMethod | null;
   /** New address waiting for confirmation (Change email) */
   pendingEmail: string | null;
+  preferences: Preferences;
+}
+
+/** Display settings saved on the account */
+export interface Preferences {
+  /** Usage bars: each category's color, or budget status colors */
+  barColor: 'category' | 'status';
+  badgeStyle: 'soft' | 'solid' | 'outline';
 }
 
 export type MfaMethod = 'TOTP' | 'EMAIL';

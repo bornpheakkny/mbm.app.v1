@@ -1,10 +1,16 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { THEME_KEY, type Theme } from '@/constants';
 
+export type ThemePreference = Theme | 'system';
+
 interface ThemeState {
+  /** The theme actually shown */
   theme: Theme;
   toggleTheme: () => void;
   setTheme: (t: Theme) => void;
+  /** What the user picked: light, dark, or follow the system */
+  preference: ThemePreference;
+  setPreference: (p: ThemePreference) => void;
 }
 
 const ThemeContext = createContext<ThemeState | null>(null);
@@ -47,7 +53,25 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const toggleTheme = useCallback(() => setTheme(theme === 'dark' ? 'light' : 'dark'), [theme, setTheme]);
 
-  const value = useMemo(() => ({ theme, toggleTheme, setTheme }), [theme, toggleTheme, setTheme]);
+  /** 'system' forgets the saved choice and follows the operating system again */
+  const setPreference = useCallback(
+    (p: ThemePreference) => {
+      if (p !== 'system') return setTheme(p);
+      setSaved(null);
+      try {
+        localStorage.removeItem(THEME_KEY);
+      } catch {
+        // storage unavailable — nothing to clear
+      }
+    },
+    [setTheme],
+  );
+
+  const preference: ThemePreference = saved ?? 'system';
+  const value = useMemo(
+    () => ({ theme, toggleTheme, setTheme, preference, setPreference }),
+    [theme, toggleTheme, setTheme, preference, setPreference],
+  );
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 

@@ -1,5 +1,5 @@
 import { api } from './apiClient';
-import type { AuthResponse, LoginResponse, User } from '@/types';
+import type { AuthResponse, LoginResponse, Preferences, User } from '@/types';
 
 export const authService = {
   /** Returns a session, or an MFA challenge when two-step verification is on */
@@ -13,7 +13,7 @@ export const authService = {
   register: (body: { name: string; email: string; password: string; currency?: string }) =>
     api.post<AuthResponse>('/auth/register', body).then((r) => r.data),
   me: () => api.get<{ user: User }>('/auth/me').then((r) => r.data.user),
-  updateMe: (body: Partial<Pick<User, 'name' | 'currency'>>) =>
+  updateMe: (body: Partial<Pick<User, 'name' | 'currency'>> & { preferences?: Partial<Preferences> }) =>
     api.patch<{ user: User }>('/auth/me', body).then((r) => r.data.user),
   /** Returns a fresh token; other sessions are signed out */
   changePassword: (currentPassword: string, newPassword: string) =>
