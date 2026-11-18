@@ -1,4 +1,4 @@
-.account-hero {
+.accountHero {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -7,26 +7,26 @@
     radial-gradient(circle at 0% 0%, var(--primary-soft), transparent 60%),
     var(--surface);
 }
-.account-hero__text {
+.accountHeroText {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
-.account-hero__text h2 {
+.accountHeroText h2 {
   font-size: 18px;
 }
-.account-hero__text :global(.muted) {
+.accountHeroText :global(.muted) {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.account-hero__tags {
+.accountHeroTags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin-left: auto;
 }
 @media (max-width: 640px) {
-  .account-hero__tags {
+  .accountHeroTags {
     margin-left: 0;
     width: 100%;
   }

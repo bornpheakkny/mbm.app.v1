@@ -1,13 +1,13 @@
-.tx-total {
+.txTotal {
   color: var(--text);
 }
-.tx-desc {
+.txDesc {
   min-width: 200px;
 }
-.tx-amount--income {
+.txAmountIncome {
   color: var(--success);
 }
-.amount-input {
+.amountInput {
   font-size: 22px !important;
   font-weight: 650;
   height: 52px !important;
@@ -18,7 +18,7 @@
    [description · note      ] [amount ]
    [category] [date         ] [actions] */
 @media (max-width: 640px) {
-  .tx-table tbody tr {
+  .txTable tbody tr {
     grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas:
       'desc desc amount'
@@ -27,40 +27,40 @@
     gap: 6px 10px;
     padding: 12px 8px 10px 16px;
   }
-  .tx-table tbody td[data-label]::before {
+  .txTable tbody td[data-label]::before {
     display: none;
   }
-  .tx-table tbody .tx-desc {
+  .txTable tbody .txDesc {
     grid-area: desc;
     min-width: 0;
   }
-  .tx-table tbody .tx-desc :global(.strong) {
+  .txTable tbody .txDesc :global(.strong) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .tx-table tbody .tx-amount {
+  .txTable tbody .txAmount {
     grid-area: amount;
     align-self: start;
     padding-right: 8px !important;
     text-align: right !important;
     font-size: 15px;
   }
-  .tx-table tbody .tx-cat {
+  .txTable tbody .txCat {
     grid-area: cat;
   }
-  .tx-table tbody .tx-date {
+  .txTable tbody .txDate {
     grid-area: date;
     font-size: 12.5px;
   }
-  .tx-table tbody .tx-actions {
+  .txTable tbody .txActions {
     grid-area: actions;
   }
-  .tx-table tfoot tr {
+  .txTable tfoot tr {
     grid-template-columns: 1fr auto;
     align-items: center;
   }
-  .tx-table tfoot td[data-label]::before {
+  .txTable tfoot td[data-label]::before {
     display: none;
   }
 }

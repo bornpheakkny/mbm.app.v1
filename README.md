@@ -44,7 +44,7 @@ src/
   main.tsx        Entry point
 ```
 
-**Styling:** components, pages and layouts use **CSS Modules** (`Name.module.css`, imported as `styles` and used as `styles.someClass`; kebab-case class names are available in camelCase). Shared primitives (`.btn`, `.card`, `.field`, `.table`, `.pill`…) and design tokens are global in `src/styles/`. Combine classes with `cx()` from `utils/cx`.
+**Styling:** components, pages and layouts use **CSS Modules** (`Name.module.css`, imported as `styles` and used as `styles.someClass`; write module class names in camelCase). Shared primitives (`.btn`, `.card`, `.field`, `.table`, `.pill`…) and design tokens are global in `src/styles/`. Combine classes with `cx()` from `utils/cx`.
 
 **Dropdowns:** use `<Select>` from `@/components/Select` instead of a native `<select>`. Native option lists can't be styled, so `Select` renders its own list (colored dots, icons, descriptions, keyboard support) and a bottom sheet on phones.
 

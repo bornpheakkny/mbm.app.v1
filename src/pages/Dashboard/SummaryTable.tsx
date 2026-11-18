@@ -49,7 +49,7 @@ export function SummaryTable(props: {
               <tr key={r.categoryId}>
                 <td className="cell--title">
                   <CategoryBadge name={r.name} color={r.color} />
-                  {kind === 'expense' && <UsageBar used={r.actual} budget={r.budgeted} className={styles.summaryUsage} />}
+                  {kind === 'expense' && <UsageBar used={r.actual} budget={r.budgeted} color={r.color} className={styles.summaryUsage} />}
                 </td>
                 <td className="num" data-label="Budgeted">
                   {money(r.budgeted)}

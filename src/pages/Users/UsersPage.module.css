@@ -1,24 +1,24 @@
-.user-cell {
+.userCell {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 220px;
 }
-.user-cell__text {
+.userCellText {
   min-width: 0;
 }
-.user-cell__name {
+.userCellName {
   display: flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
 }
-.user-cell__name :global(.pill) {
+.userCellName :global(.pill) {
   height: 18px;
   font-size: 10.5px;
   padding: 0 7px;
 }
-.user-cell__email {
+.userCellEmail {
   font-size: 13px;
   color: var(--muted);
   overflow: hidden;
@@ -27,16 +27,16 @@
 }
 
 @media (max-width: 640px) {
-  .users-table tbody tr {
+  .usersTable tbody tr {
     position: relative;
   }
-  .users-table :global(.cell--title) {
+  .usersTable :global(.cell--title) {
     padding-right: 72px !important;
   }
-  .user-cell {
+  .userCell {
     min-width: 0;
   }
-  .users-table__actions {
+  .usersTableActions {
     position: absolute;
     top: 14px;
     right: 10px;

@@ -8,10 +8,6 @@ export default defineConfig({
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
   server: { port: 5173 },
-  css: {
-    // Component styles are CSS Modules (*.module.css); `.nav-link` is used as styles.navLink
-    modules: { localsConvention: 'camelCaseOnly' },
-  },
   build: {
     rollupOptions: {
       output: {

@@ -11,11 +11,16 @@
   transition: width 0.5s var(--ease);
 }
 .ok {
-  background: var(--primary);
+  background: var(--fill, var(--primary));
 }
 .near {
   background: #f59e0b;
 }
+/* Striped so "over budget" can't be confused with a red category */
 .over {
-  background: var(--danger);
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--danger) 0 5px,
+    color-mix(in srgb, var(--danger) 55%, transparent) 5px 10px
+  );
 }

@@ -1,18 +1,18 @@
-.cat__icon--income {
+.catIconIncome {
   background: var(--success-soft);
   color: var(--success);
 }
-.cat__icon--expense {
+.catIconExpense {
   background: var(--warning-soft);
   color: var(--warning);
 }
 
-.cat-list {
+.catList {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.cat-item {
+.catItem {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -20,47 +20,47 @@
   padding: 8px 12px 8px 20px;
   border-bottom: 1px solid var(--border);
 }
-.cat-item:hover {
+.catItem:hover {
   background: var(--surface-2);
 }
-.cat-item__actions {
+.catItemActions {
   margin-left: auto;
   opacity: 0.6;
   transition: opacity 0.15s ease;
 }
-.cat-item:hover .cat-item__actions,
-.cat-item:focus-within .cat-item__actions {
+.catItem:hover .catItemActions,
+.catItem:focus-within .catItemActions {
   opacity: 1;
 }
-.archived-badge {
+.archivedBadge {
   opacity: 0.5;
 }
-.cat-item--edit {
+.catItemEdit {
   flex-wrap: wrap;
   gap: 10px;
   padding: 14px 20px;
   background: var(--surface-2);
 }
-.cat-item--edit input {
+.catItemEdit input {
   flex: 1 1 200px;
   height: 38px;
 }
-.cat-item--edit :global(.row-actions) {
+.catItemEdit :global(.row-actions) {
   margin-left: auto;
 }
 
-.cat-add {
+.catAdd {
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 16px 20px;
   background: var(--surface-2);
 }
-.cat-add__row {
+.catAddRow {
   display: flex;
   gap: 8px;
 }
-.cat-add__row input {
+.catAddRow input {
   flex: 1;
   min-width: 0;
 }
@@ -85,21 +85,21 @@
 .swatch:hover {
   transform: scale(1.12);
 }
-.swatch--on {
+.swatchOn {
   box-shadow: 0 0 0 2px var(--text);
 }
 
 @media (hover: none) {
-  .cat-item__actions {
+  .catItemActions {
     opacity: 1;
   }
 }
 @media (max-width: 640px) {
-  .cat-item {
+  .catItem {
     padding: 8px 8px 8px 16px;
   }
-  .cat-item--edit,
-  .cat-add {
+  .catItemEdit,
+  .catAdd {
     padding: 14px 16px;
   }
   .swatch {
