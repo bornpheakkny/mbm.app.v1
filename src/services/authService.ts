@@ -21,8 +21,14 @@ export const authService = {
       .post<{ token: string }>('/auth/change-password', { currentPassword, newPassword })
       .then((r) => r.data.token),
 
+  /** Confirms a sign-up email or a changed email (changed: true) */
   verifyEmail: (token: string) =>
-    api.post<{ email: string }>('/auth/verify-email', { token }).then((r) => r.data),
+    api.post<{ email: string; changed: boolean }>('/auth/verify-email', { token }).then((r) => r.data),
+  /** Sends a confirmation link to the new address; the email only changes once it's confirmed */
+  changeEmail: (newEmail: string, password: string) =>
+    api.post<{ user: User }>('/auth/change-email', { newEmail, password }).then((r) => r.data.user),
+  resendEmailChange: () => api.post('/auth/change-email/resend'),
+  cancelEmailChange: () => api.delete<{ user: User }>('/auth/change-email').then((r) => r.data.user),
   resendVerification: () => api.post('/auth/resend-verification'),
   forgotPassword: (email: string) =>
     api.post<{ message: string }>('/auth/forgot-password', { email }).then((r) => r.data.message),

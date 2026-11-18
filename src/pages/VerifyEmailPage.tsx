@@ -22,7 +22,12 @@ export function VerifyEmailPage() {
     authService
       .verifyEmail(token)
       .then(async (r) => {
-        setResult({ ok: true, text: `${r.email} is verified. You can now reset your password by email if you ever forget it.` });
+        setResult({
+          ok: true,
+          text: r.changed
+            ? `Your account email is now ${r.email}. Use it the next time you log in.`
+            : `${r.email} is verified. You can now reset your password by email if you ever forget it.`,
+        });
         await refreshUser().catch(() => undefined);
       })
       .catch((err) => setResult({ ok: false, text: errorMessage(err) }));

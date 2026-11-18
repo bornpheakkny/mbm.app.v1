@@ -12,6 +12,7 @@ Frontend for the Monthly Budget Management System.
 - **Budget plan** — set budgeted amounts per category for a month; planned left over; copy from last month.
 - **Categories** — add, rename, recolor, archive, delete.
 - **My account** — edit name and currency, change password, email verification status, two-step verification (authenticator app or email code, backup codes).
+- **Change email** — fix a mistyped address from the banner or My account; the new address is confirmed by link.
 - **Account recovery** — verify-email link, "Forgot password?" → emailed reset link → choose a new password.
 - **Two-step login** — after the password, enter the app / email code or a backup code.
 - **User accounts** (admins only) — list, search and filter accounts; add users, edit details and role, enable / disable, reset password, delete. Every account has its own private budget.

@@ -14,6 +14,8 @@ export interface User {
   emailVerified: boolean;
   /** null = two-step verification off */
   mfaMethod: MfaMethod | null;
+  /** New address waiting for confirmation (Change email) */
+  pendingEmail: string | null;
 }
 
 export type MfaMethod = 'TOTP' | 'EMAIL';

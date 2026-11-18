@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { TwoStepSettings } from '@/components/security/TwoStepSettings';
+import { ChangeEmailModal } from '@/components/security/ChangeEmailModal';
 import { authService, errorMessage } from '@/services';
 import { useAuth } from '@/context/AuthContext';
 import { Alert } from '@/components/ui';
@@ -39,6 +40,7 @@ function ProfileCard() {
   const [currency, setCurrency] = useState(user?.currency ?? 'USD');
   const [msg, setMsg] = useState<{ tone: 'error' | 'success'; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [changingEmail, setChangingEmail] = useState(false);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -63,7 +65,7 @@ function ProfileCard() {
           <span>Name</span>
           <input required maxLength={80} value={name} onChange={(e) => setName(e.target.value)} />
         </label>
-        <label className="field">
+        <div className="field">
           <span className="field__label-row">
             Email
             {user?.emailVerified ? (
@@ -72,8 +74,18 @@ function ProfileCard() {
               <span className="pill pill--off">Not verified</span>
             )}
           </span>
-          <input value={user?.email ?? ''} disabled />
-        </label>
+          <div className="input-with-action">
+            <input value={user?.email ?? ''} disabled aria-label="Email" />
+            <button type="button" className="btn btn--ghost" onClick={() => setChangingEmail(true)}>
+              Change
+            </button>
+          </div>
+          {user?.pendingEmail && (
+            <span className="small muted">
+              Waiting for you to confirm <strong>{user.pendingEmail}</strong> — check that inbox.
+            </span>
+          )}
+        </div>
         <label className="field">
           <span>Currency</span>
           <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
@@ -86,6 +98,12 @@ function ProfileCard() {
           {busy ? 'Saving…' : 'Save profile'}
         </button>
       </form>
+      {changingEmail && (
+        <ChangeEmailModal
+          onClose={() => setChangingEmail(false)}
+          onSent={(email) => setMsg({ tone: 'success', text: `Confirmation link sent to ${email}.` })}
+        />
+      )}
     </section>
   );
 }
