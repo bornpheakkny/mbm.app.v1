@@ -38,7 +38,7 @@ export function VerifyEmailBanner() {
   const resend = () =>
     pending
       ? run(() => authService.resendEmailChange(), `Sent again to ${pending}. Check your inbox and spam folder.`)
-      : run(() => authService.resendVerification(), `Sent again to ${user.email}. Check your inbox and spam folder.`);
+      : run(() => authService.resendVerification(), `Verification link sent to ${user.email}. Check your inbox and spam folder.`);
 
   const cancel = () => run(async () => setUser(await authService.cancelEmailChange()), 'Email change cancelled.');
 
@@ -59,14 +59,13 @@ export function VerifyEmailBanner() {
                 </>
               ) : (
                 <>
-                  <strong>Verify your email</strong> so you can reset your password if you forget it. Link sent to{' '}
-                  {user.email}.
+                  <strong>Verify your email</strong> ({user.email}) so you can reset your password if you forget it.
                 </>
               ))}
           </p>
           <div className={styles.actions}>
             <button className={cx('btn btn--sm', styles.btn)} onClick={resend} disabled={busy}>
-              {busy ? 'Please wait…' : 'Resend link'}
+              {busy ? 'Sending…' : pending ? 'Resend link' : 'Send link'}
             </button>
             {pending ? (
               <button className={cx('btn btn--sm', styles.btn, styles.plain)} onClick={cancel} disabled={busy}>

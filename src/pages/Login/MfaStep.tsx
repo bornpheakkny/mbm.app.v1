@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { isAxiosError } from 'axios';
 import { Alert } from '@/components/Alert';
 import { useAuth } from '@/context/AuthContext';
 import { AuthLayout, AuthLinks } from '@/layouts/AuthLayout';
@@ -19,7 +20,11 @@ export function MfaStep({
   const [mfaToken, setMfaToken] = useState(challenge.mfaToken);
   const [useBackup, setUseBackup] = useState(false);
   const [code, setCode] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    challenge.emailFailed
+      ? `We couldn't email your sign-in code to ${challenge.emailHint}. Try "Resend code" in a minute, or use a backup code.`
+      : null,
+  );
   const [info, setInfo] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -52,6 +57,9 @@ export function MfaStep({
       setMfaToken(await authService.resendLoginCode(mfaToken));
       setInfo(`A new code is on its way to ${challenge.emailHint}.`);
     } catch (err) {
+      // Even when sending fails the server starts a new sign-in attempt; keep using it
+      const next = isAxiosError(err) ? (err.response?.data as { mfaToken?: string } | undefined)?.mfaToken : undefined;
+      if (next) setMfaToken(next);
       setError(errorMessage(err));
     }
   }

@@ -34,6 +34,8 @@ export interface MfaChallenge {
   method: MfaMethod;
   mfaToken: string;
   emailHint: string;
+  /** The emailed code couldn't be sent (use Resend or a backup code) */
+  emailFailed?: boolean;
 }
 
 export type LoginResponse = AuthResponse | MfaChallenge;
