@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { AlertTriangle, HelpCircle } from 'lucide-react';
-import { Modal } from '@/components/Modal';
-import './ConfirmDialog.css';
+import { Modal, ModalFooter } from '@/components/Modal';
+import styles from './ConfirmDialog.module.css';
 
 export interface ConfirmOptions {
   title: string;
@@ -13,13 +13,7 @@ export interface ConfirmOptions {
 }
 
 /** Yes/no dialog used by useConfirm() instead of the browser's confirm() */
-export function ConfirmDialog({
-  options,
-  onResult,
-}: {
-  options: ConfirmOptions;
-  onResult: (ok: boolean) => void;
-}) {
+export function ConfirmDialog({ options, onResult }: { options: ConfirmOptions; onResult: (ok: boolean) => void }) {
   const [closing, setClosing] = useState(false);
   const done = (ok: boolean) => {
     if (closing) return;
@@ -35,20 +29,15 @@ export function ConfirmDialog({
       size="sm"
       onClose={() => done(false)}
     >
-      {options.message && <div className="confirm__message">{options.message}</div>}
-      <div className="modal__foot">
+      {options.message && <div className={styles.message}>{options.message}</div>}
+      <ModalFooter>
         <button type="button" className="btn btn--secondary" onClick={() => done(false)}>
           {options.cancelLabel ?? 'Cancel'}
         </button>
-        <button
-          type="button"
-          autoFocus
-          className={`btn ${options.danger ? 'btn--danger' : 'btn--primary'}`}
-          onClick={() => done(true)}
-        >
+        <button type="button" autoFocus className={`btn ${options.danger ? 'btn--danger' : 'btn--primary'}`} onClick={() => done(true)}>
           {options.confirmLabel ?? 'Confirm'}
         </button>
-      </div>
+      </ModalFooter>
     </Modal>
   );
 }

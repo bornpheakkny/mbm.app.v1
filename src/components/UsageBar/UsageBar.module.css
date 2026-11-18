@@ -5,17 +5,17 @@
   background: var(--surface-3);
   overflow: hidden;
 }
-.usage__fill {
+.fill {
   height: 100%;
   border-radius: inherit;
   transition: width 0.5s var(--ease);
 }
-.usage__fill--ok {
+.ok {
   background: var(--primary);
 }
-.usage__fill--near {
+.near {
   background: #f59e0b;
 }
-.usage__fill--over {
+.over {
   background: var(--danger);
 }

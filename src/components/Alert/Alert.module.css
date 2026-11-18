@@ -9,15 +9,15 @@
   line-height: 1.45;
   animation: alert-in 0.2s var(--ease);
 }
-.alert__icon {
+.icon {
   flex-shrink: 0;
   margin-top: 1px;
 }
-.alert__body {
+.body {
   flex: 1;
   min-width: 0;
 }
-.alert__close {
+.close {
   display: grid;
   place-items: center;
   width: 22px;
@@ -29,26 +29,26 @@
   color: inherit;
   opacity: 0.7;
 }
-.alert__close:hover {
+.close:hover {
   opacity: 1;
   background: rgb(0 0 0 / 0.06);
 }
-.alert--error {
+.error {
   background: var(--danger-soft);
   color: var(--danger);
   border-color: color-mix(in srgb, var(--danger) 25%, transparent);
 }
-.alert--success {
+.success {
   background: var(--success-soft);
   color: var(--success);
   border-color: color-mix(in srgb, var(--success) 25%, transparent);
 }
-.alert--info {
+.info {
   background: var(--info-soft);
   color: var(--info);
   border-color: color-mix(in srgb, var(--info) 25%, transparent);
 }
-.alert--warning {
+.warning {
   background: var(--warning-soft);
   color: var(--warning);
   border-color: color-mix(in srgb, var(--warning) 25%, transparent);

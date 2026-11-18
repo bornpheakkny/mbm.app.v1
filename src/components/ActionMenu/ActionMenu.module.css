@@ -1,4 +1,4 @@
-.action-menu {
+.menu {
   position: fixed;
   z-index: 90;
   width: 220px;
@@ -7,9 +7,9 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
-  animation: action-menu-in 0.12s var(--ease);
+  animation: menu-in 0.12s var(--ease);
 }
-.action-menu__item {
+.item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -23,26 +23,26 @@
   font-size: 13.5px;
   text-align: left;
 }
-.action-menu__item svg {
+.item svg {
   color: var(--muted);
 }
-.action-menu__item:hover {
+.item:hover {
   background: var(--surface-3);
   color: var(--text);
 }
-.action-menu__item--danger,
-.action-menu__item--danger svg {
+.danger,
+.danger svg {
   color: var(--danger);
 }
-.action-menu__item--danger:hover {
+.danger:hover {
   background: var(--danger-soft);
   color: var(--danger);
 }
-.action-menu__trigger--open {
+.triggerOpen {
   background: var(--surface-3);
   color: var(--text);
 }
-@keyframes action-menu-in {
+@keyframes menu-in {
   from {
     opacity: 0;
     transform: translateY(-4px);

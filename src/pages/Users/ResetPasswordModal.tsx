@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { KeyRound } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
+import { Modal, ModalFooter } from '@/components/Modal';
 import { adminService, errorMessage } from '@/services';
 import type { AdminUser } from '@/types';
 
@@ -40,14 +40,14 @@ export function ResetPasswordModal({ user, onClose, onDone }: { user: AdminUser;
           <input type="text" required minLength={8} autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} autoFocus placeholder="At least 8 characters" />
           <span className="field__hint">Share it with {user.email}.</span>
         </label>
-        <div className="modal__foot">
+        <ModalFooter>
           <button type="button" className="btn btn--secondary" onClick={onClose}>
             Cancel
           </button>
           <button className="btn btn--primary" disabled={busy}>
             {busy ? 'Saving…' : 'Reset password'}
           </button>
-        </div>
+        </ModalFooter>
       </form>
     </Modal>
   );

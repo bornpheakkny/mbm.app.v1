@@ -3,7 +3,8 @@ import { CheckCircle2, MailWarning, X } from 'lucide-react';
 import { ChangeEmailModal } from '@/components/ChangeEmailModal';
 import { useAuth } from '@/context/AuthContext';
 import { authService, errorMessage } from '@/services';
-import './VerifyEmailBanner.css';
+import { cx } from '@/utils/cx';
+import styles from './VerifyEmailBanner.module.css';
 
 type Msg = { tone: 'success' | 'error'; text: string };
 
@@ -46,10 +47,10 @@ export function VerifyEmailBanner() {
 
   return (
     <>
-      <div className={`banner banner--${tone}`} role="status">
-        <div className="banner__inner">
-          <Icon size={18} className="banner__icon" aria-hidden />
-          <p className="banner__text">
+      <div className={cx(styles.banner, styles[tone])} role="status">
+        <div className={styles.inner}>
+          <Icon size={18} className={styles.icon} aria-hidden />
+          <p className={styles.text}>
             {msg?.text ??
               (pending ? (
                 <>
@@ -63,20 +64,20 @@ export function VerifyEmailBanner() {
                 </>
               ))}
           </p>
-          <div className="banner__actions">
-            <button className="btn btn--sm banner__btn" onClick={resend} disabled={busy}>
+          <div className={styles.actions}>
+            <button className={cx('btn btn--sm', styles.btn)} onClick={resend} disabled={busy}>
               {busy ? 'Please wait…' : 'Resend link'}
             </button>
             {pending ? (
-              <button className="btn btn--sm banner__btn banner__btn--plain" onClick={cancel} disabled={busy}>
+              <button className={cx('btn btn--sm', styles.btn, styles.plain)} onClick={cancel} disabled={busy}>
                 Cancel change
               </button>
             ) : (
-              <button className="btn btn--sm banner__btn banner__btn--plain" onClick={() => setChanging(true)} disabled={busy}>
+              <button className={cx('btn btn--sm', styles.btn, styles.plain)} onClick={() => setChanging(true)} disabled={busy}>
                 Wrong email?
               </button>
             )}
-            <button className="icon-btn icon-btn--sm banner__close" aria-label="Hide for now" onClick={() => setHidden(true)}>
+            <button className={cx('icon-btn icon-btn--sm', styles.close)} aria-label="Hide for now" onClick={() => setHidden(true)}>
               <X size={16} />
             </button>
           </div>

@@ -6,6 +6,8 @@ import { categoryService } from '@/services';
 import type { Category } from '@/types';
 import { ColorSelect } from './ColorSelect';
 import type { Run } from './CategoriesPage';
+import { cx } from '@/utils/cx';
+import styles from './CategoriesPage.module.css';
 
 /** One category row: view, rename/recolor inline, archive, delete */
 export function CategoryItem({ category: c, run }: { category: Category; run: Run }) {
@@ -26,7 +28,7 @@ export function CategoryItem({ category: c, run }: { category: Category; run: Ru
 
   if (edit) {
     return (
-      <li className="cat-item cat-item--edit">
+      <li className={cx(styles.catItem, styles.catItemEdit)}>
         <input value={name} onChange={(e) => setName(e.target.value)} maxLength={60} aria-label="Category name" autoFocus />
         <ColorSelect value={color} onChange={setColor} />
         <div className="row-actions">
@@ -53,10 +55,10 @@ export function CategoryItem({ category: c, run }: { category: Category; run: Ru
   }
 
   return (
-    <li className={`cat-item ${c.archived ? 'cat-item--archived' : ''}`}>
-      <CategoryBadge name={c.name} color={c.color} />
+    <li className={styles.catItem}>
+      <CategoryBadge name={c.name} color={c.color} className={c.archived ? styles.archivedBadge : undefined} />
       {c.archived && <span className="pill">Archived</span>}
-      <div className="row-actions cat-item__actions">
+      <div className={cx('row-actions', styles.catItemActions)}>
         <button className="icon-btn icon-btn--sm" aria-label={`Edit ${c.name}`} title="Edit" onClick={() => setEdit(true)}>
           <Pencil size={16} />
         </button>

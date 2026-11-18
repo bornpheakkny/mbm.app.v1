@@ -1,10 +1,11 @@
 import { useState, type FormEvent } from 'react';
-import { UserPlus, UserRoundPen } from 'lucide-react';
+import { ShieldCheck, UserPlus, UserRound, UserRoundPen } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
-import { CURRENCIES } from '@/constants';
+import { Modal, ModalFooter } from '@/components/Modal';
+import { CURRENCY_OPTIONS } from '@/constants';
 import { adminService, errorMessage } from '@/services';
 import type { AdminUser, Role } from '@/types';
+import { Select } from '@/components/Select';
 
 /** Admin: create an account or edit its details and role */
 export function UserModal({
@@ -80,33 +81,44 @@ export function UserModal({
           </label>
         )}
         <div className="form__row">
-          <label className="field">
-            <span>Role</span>
-            <select value={form.role} onChange={set('role')} disabled={roleLocked}>
-              <option value="USER">User</option>
-              <option value="ADMIN">Admin</option>
-            </select>
-          </label>
-          <label className="field">
-            <span>Currency</span>
-            <select value={form.currency} onChange={set('currency')}>
-              {CURRENCIES.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </select>
-          </label>
+          <div className="field">
+            <label className="field__label" htmlFor="user-role">
+              Role
+            </label>
+            <Select
+              id="user-role"
+              value={form.role}
+              onChange={(role) => setForm((f) => ({ ...f, role }))}
+              disabled={roleLocked}
+              options={[
+                { value: 'USER', label: 'User', icon: UserRound, description: 'Own budget only' },
+                { value: 'ADMIN', label: 'Admin', icon: ShieldCheck, description: 'Can manage accounts' },
+              ]}
+            />
+          </div>
+          <div className="field">
+            <label className="field__label" htmlFor="user-currency">
+              Currency
+            </label>
+            <Select
+              id="user-currency"
+              value={form.currency}
+              onChange={(currency) => setForm((f) => ({ ...f, currency }))}
+              options={CURRENCY_OPTIONS}
+            />
+          </div>
         </div>
         {form.role === 'ADMIN' && !roleLocked && (
           <Alert tone="info">Admins can add, edit, disable and delete other accounts.</Alert>
         )}
-        <div className="modal__foot">
+        <ModalFooter>
           <button type="button" className="btn btn--secondary" onClick={onClose}>
             Cancel
           </button>
           <button className="btn btn--primary" disabled={busy}>
             {busy ? 'Saving…' : user ? 'Save changes' : 'Create user'}
           </button>
-        </div>
+        </ModalFooter>
       </form>
     </Modal>
   );

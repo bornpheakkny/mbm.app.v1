@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { Alert } from '@/components/Alert';
 import { useAuth } from '@/context/AuthContext';
-import { AuthLayout } from '@/layouts/AuthLayout';
+import { AuthFooter, AuthLayout } from '@/layouts/AuthLayout';
 import { errorMessage } from '@/services';
 import type { MfaChallenge } from '@/types';
 import { MfaStep } from './MfaStep';
@@ -85,9 +85,9 @@ export function LoginPage() {
           {busy ? 'Logging in…' : 'Log in'}
         </button>
       </form>
-      <p className="auth__switch">
+      <AuthFooter>
         New here? <Link to="/register">Create an account</Link>
-      </p>
+      </AuthFooter>
     </AuthLayout>
   );
 }

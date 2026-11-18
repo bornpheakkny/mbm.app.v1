@@ -34,7 +34,7 @@
     grid-area: desc;
     min-width: 0;
   }
-  .tx-table tbody .tx-desc .strong {
+  .tx-table tbody .tx-desc :global(.strong) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { KeyRound, Mail, RefreshCw, ShieldCheck, ShieldOff, Smartphone } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
+import { Modal, ModalFooter } from '@/components/Modal';
 import { RecoveryCodes } from '@/components/RecoveryCodes';
 import { useAuth } from '@/context/AuthContext';
 import { useAsync } from '@/hooks/useAsync';
@@ -10,7 +10,8 @@ import type { MfaMethod, User } from '@/types';
 import { EmailSetupDialog } from './EmailSetupDialog';
 import { PasswordDialog } from './PasswordDialog';
 import { TotpSetupDialog } from './TotpSetupDialog';
-import './TwoStepSettings.css';
+import { cx } from '@/utils/cx';
+import styles from './TwoStepSettings.module.css';
 
 type Dialog = { kind: 'setup'; method: MfaMethod } | { kind: 'codes'; codes: string[] } | { kind: 'regen' } | { kind: 'disable' };
 
@@ -35,7 +36,7 @@ export function TwoStepSettings({ recoveryCodesLeft: justUsed }: { recoveryCodes
   };
 
   return (
-    <section className="card two-step">
+    <section className="card">
       <div className="card__title">
         <h2>
           <span className="card__icon">
@@ -66,15 +67,15 @@ export function TwoStepSettings({ recoveryCodesLeft: justUsed }: { recoveryCodes
               When you log in we ask for your password <strong>and</strong> a code from your{' '}
               {method === 'TOTP' ? 'authenticator app' : `email (${user.email})`}.
             </p>
-            <div className="two-step__status">
-              <div className="two-step__item">
+            <div className={styles.status}>
+              <div className={styles.item}>
                 {method === 'TOTP' ? <Smartphone size={18} /> : <Mail size={18} />}
                 <div>
                   <div className="xsmall muted">Method</div>
                   <div className="strong">{METHOD_LABEL[method]}</div>
                 </div>
               </div>
-              <div className="two-step__item">
+              <div className={styles.item}>
                 <KeyRound size={18} />
                 <div>
                   <div className="xsmall muted">Backup codes left</div>
@@ -100,21 +101,21 @@ export function TwoStepSettings({ recoveryCodesLeft: justUsed }: { recoveryCodes
         ) : (
           <>
             <p className="muted small">Add a second step at login so a stolen password isn't enough. Choose how to get codes:</p>
-            <div className="choice-grid">
-              <button className="choice" onClick={() => setDialog({ kind: 'setup', method: 'TOTP' })}>
-                <span className="choice__icon">
+            <div className={styles.choiceGrid}>
+              <button className={styles.choice} onClick={() => setDialog({ kind: 'setup', method: 'TOTP' })}>
+                <span className={styles.choiceIcon}>
                   <Smartphone size={20} />
                 </span>
-                <span className="choice__title">Authenticator app</span>
-                <span className="choice__desc">Google Authenticator, Microsoft Authenticator, Authy… Works offline.</span>
-                <span className="pill pill--primary choice__tag">Recommended</span>
+                <span className={styles.choiceTitle}>Authenticator app</span>
+                <span className={styles.choiceDesc}>Google Authenticator, Microsoft Authenticator, Authy… Works offline.</span>
+                <span className={cx('pill pill--primary', styles.choiceTag)}>Recommended</span>
               </button>
-              <button className="choice" disabled={!user.emailVerified} onClick={() => setDialog({ kind: 'setup', method: 'EMAIL' })}>
-                <span className="choice__icon">
+              <button className={styles.choice} disabled={!user.emailVerified} onClick={() => setDialog({ kind: 'setup', method: 'EMAIL' })}>
+                <span className={styles.choiceIcon}>
                   <Mail size={20} />
                 </span>
-                <span className="choice__title">Email code</span>
-                <span className="choice__desc">
+                <span className={styles.choiceTitle}>Email code</span>
+                <span className={styles.choiceDesc}>
                   {user.emailVerified ? `We email a 6-digit code to ${user.email}.` : 'Verify your email first to use this.'}
                 </span>
               </button>
@@ -132,11 +133,11 @@ export function TwoStepSettings({ recoveryCodesLeft: justUsed }: { recoveryCodes
       {dialog?.kind === 'codes' && (
         <Modal title="Save your backup codes" icon={KeyRound} onClose={() => setDialog(null)}>
           <RecoveryCodes codes={dialog.codes} email={user.email} />
-          <div className="modal__foot">
+          <ModalFooter>
             <button className="btn btn--primary" onClick={() => setDialog(null)}>
               I've saved them
             </button>
-          </div>
+          </ModalFooter>
         </Modal>
       )}
       {dialog?.kind === 'regen' && (

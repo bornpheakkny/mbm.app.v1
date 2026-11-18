@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Inbox, type LucideIcon } from 'lucide-react';
-import './EmptyState.css';
+import styles from './EmptyState.module.css';
 
 /** Friendly placeholder for empty lists and loading states */
 export function EmptyState({
@@ -15,13 +15,13 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="empty">
-      <span className="empty__icon">
+    <div className={styles.empty}>
+      <span className={styles.icon}>
         <Icon size={22} />
       </span>
-      <p className="empty__title">{title}</p>
-      {children && <p className="empty__text">{children}</p>}
-      {action && <div className="empty__action">{action}</div>}
+      <p className={styles.title}>{title}</p>
+      {children && <p className={styles.text}>{children}</p>}
+      {action && <div className={styles.action}>{action}</div>}
     </div>
   );
 }

@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 14px;
 }
-.recovery__codes {
+.codes {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px 24px;
@@ -16,7 +16,7 @@
   font-size: 15px;
   letter-spacing: 0.05em;
 }
-.recovery__codes li::marker {
+.codes li::marker {
   color: var(--subtle);
   font-size: 12px;
 }

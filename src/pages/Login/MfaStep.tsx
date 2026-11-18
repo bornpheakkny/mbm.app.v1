@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Alert } from '@/components/Alert';
 import { useAuth } from '@/context/AuthContext';
-import { AuthLayout } from '@/layouts/AuthLayout';
+import { AuthLayout, AuthLinks } from '@/layouts/AuthLayout';
 import { authService, errorMessage } from '@/services';
 import type { MfaChallenge } from '@/types';
 
@@ -89,7 +89,7 @@ export function MfaStep({
           </>
         )}
       </form>
-      <div className="auth__links">
+      <AuthLinks>
         {isEmail && !useBackup && !expired && (
           <button type="button" className="link" onClick={resend}>
             Resend code
@@ -111,7 +111,7 @@ export function MfaStep({
         <button type="button" className="link link--muted" onClick={onBack}>
           Cancel
         </button>
-      </div>
+      </AuthLinks>
     </AuthLayout>
   );
 }

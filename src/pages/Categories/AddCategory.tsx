@@ -4,6 +4,7 @@ import { categoryService } from '@/services';
 import type { CategoryType } from '@/types';
 import { ColorSelect } from './ColorSelect';
 import type { Run } from './CategoriesPage';
+import styles from './CategoriesPage.module.css';
 
 export function AddCategory({ type, run }: { type: CategoryType; run: Run }) {
   const [name, setName] = useState('');
@@ -16,8 +17,8 @@ export function AddCategory({ type, run }: { type: CategoryType; run: Run }) {
   }
 
   return (
-    <form className="cat-add" onSubmit={onSubmit}>
-      <div className="cat-add__row">
+    <form className={styles.catAdd} onSubmit={onSubmit}>
+      <div className={styles.catAddRow}>
         <input
           placeholder={type === 'INCOME' ? 'New income source' : 'New expense category'}
           value={name}

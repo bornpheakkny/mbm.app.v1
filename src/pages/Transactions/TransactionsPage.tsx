@@ -12,7 +12,9 @@ import { categoryService, errorMessage, transactionService } from '@/services';
 import type { CategoryType, Transaction } from '@/types';
 import { formatDate, formatMoney, formatMonthLabel } from '@/utils/format';
 import { TransactionModal } from './TransactionModal';
-import './TransactionsPage.css';
+import { cx } from '@/utils/cx';
+import styles from './TransactionsPage.module.css';
+import { Select } from '@/components/Select';
 
 const COPY: Record<CategoryType, { title: string; total: string; cat: string; all: string; add: string; empty: string }> = {
   INCOME: { title: 'Income', total: 'Received', cat: 'Source', all: 'All sources', add: 'Add income', empty: 'No income recorded' },
@@ -77,7 +79,7 @@ export function TransactionsPage({ type }: { type: CategoryType }) {
         title={copy.title}
         description={
           <>
-            {copy.total} <strong className="tx-total">{money(list.data?.totalAmount ?? 0)}</strong> across{' '}
+            {copy.total} <strong className={styles.txTotal}>{money(list.data?.totalAmount ?? 0)}</strong> across{' '}
             {list.data?.total ?? 0} {list.data?.total === 1 ? 'entry' : 'entries'}
           </>
         }
@@ -93,14 +95,16 @@ export function TransactionsPage({ type }: { type: CategoryType }) {
           <Search size={16} />
           <input placeholder="Search description or note…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search" />
         </div>
-        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} aria-label={copy.cat}>
-          <option value="">{copy.all}</option>
-          {categories.data?.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+        <Select
+          className="toolbar__filter"
+          aria-label={copy.cat}
+          value={categoryId}
+          onChange={setCategoryId}
+          options={[
+            { value: '', label: copy.all },
+            ...(categories.data ?? []).map((c) => ({ value: c.id, label: c.name, color: c.color })),
+          ]}
+        />
       </div>
 
       {(list.error || actionError) && <Alert>{list.error ?? actionError}</Alert>}
@@ -128,7 +132,7 @@ export function TransactionsPage({ type }: { type: CategoryType }) {
           )
         ) : (
           <div className="table-wrap">
-            <table className="table table--stack tx-table" style={{ '--stack-cols': 2 } as CSSProperties}>
+            <table className={cx('table table--stack', styles.txTable)} style={{ '--stack-cols': 2 } as CSSProperties}>
               <thead>
                 <tr>
                   <th>Date</th>
@@ -141,20 +145,20 @@ export function TransactionsPage({ type }: { type: CategoryType }) {
               <tbody>
                 {rows.map((t) => (
                   <tr key={t.id}>
-                    <td className="nowrap muted tx-date" data-label="Date">
+                    <td className={cx('nowrap muted', styles.txDate)} data-label="Date">
                       {formatDate(t.date)}
                     </td>
-                    <td className="cell--title tx-desc">
+                    <td className={cx('cell--title', styles.txDesc)}>
                       <div className="strong">{t.description}</div>
                       {t.note && <div className="xsmall muted">{t.note}</div>}
                     </td>
-                    <td className="tx-cat" data-label={copy.cat}>
+                    <td className={styles.txCat} data-label={copy.cat}>
                       <CategoryBadge name={t.category.name} color={t.category.color} />
                     </td>
-                    <td className={`num strong tx-amount tx-amount--${type.toLowerCase()}`} data-label="Amount">
+                    <td className={cx('num strong', styles.txAmount, type === 'INCOME' && styles.txAmountIncome)} data-label="Amount">
                       {money(t.amount)}
                     </td>
-                    <td className="cell--actions tx-actions">
+                    <td className={cx('cell--actions', styles.txActions)}>
                       <div className="row-actions">
                         <button className="icon-btn icon-btn--sm" aria-label={`Edit ${t.description}`} onClick={() => setEditing(t)}>
                           <Pencil size={16} />

@@ -1,10 +1,11 @@
 import { useState, type FormEvent } from 'react';
 import { Smartphone } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
+import { Modal, ModalFooter } from '@/components/Modal';
 import { useAsync } from '@/hooks/useAsync';
 import { errorMessage, mfaService } from '@/services';
 import type { TotpSetup, User } from '@/types';
+import styles from './TwoStepSettings.module.css';
 
 /** Scan QR → enter first code + password → authenticator method turned on */
 export function TotpSetupDialog({ onClose, onEnabled }: { onClose: () => void; onEnabled: (u: User, codes: string[]) => void }) {
@@ -34,27 +35,27 @@ export function TotpSetupDialog({ onClose, onEnabled }: { onClose: () => void; o
     <Modal title="Set up authenticator app" description="Takes about a minute." icon={Smartphone} onClose={onClose}>
       <form className="form" onSubmit={onSubmit}>
         {(error || setup.error) && <Alert>{error ?? setup.error}</Alert>}
-        <ol className="steps">
+        <ol className={styles.steps}>
           <li>
-            <span className="steps__num">1</span>
+            <span className={styles.stepNum}>1</span>
             <div>Open your authenticator app and add a new account.</div>
           </li>
           <li>
-            <span className="steps__num">2</span>
+            <span className={styles.stepNum}>2</span>
             <div>
               Scan this QR code, or type the key.
-              <div className="qr">
+              <div className={styles.qr}>
                 {setup.data ? (
                   <img src={setup.data.qrDataUrl} alt="QR code for your authenticator app" width={176} height={176} />
                 ) : (
                   <span className="muted small">Loading…</span>
                 )}
               </div>
-              {secret && <code className="secret">{secret}</code>}
+              {secret && <code className={styles.secret}>{secret}</code>}
             </div>
           </li>
           <li>
-            <span className="steps__num">3</span>
+            <span className={styles.stepNum}>3</span>
             <div>Enter the 6-digit code the app shows, and your password.</div>
           </li>
         </ol>
@@ -77,14 +78,14 @@ export function TotpSetupDialog({ onClose, onEnabled }: { onClose: () => void; o
             <input type="password" required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </label>
         </div>
-        <div className="modal__foot">
+        <ModalFooter>
           <button type="button" className="btn btn--secondary" onClick={onClose}>
             Cancel
           </button>
           <button className="btn btn--primary" disabled={busy || code.length !== 6 || !setup.data}>
             {busy ? 'Checking…' : 'Turn on'}
           </button>
-        </div>
+        </ModalFooter>
       </form>
     </Modal>
   );

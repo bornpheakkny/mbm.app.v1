@@ -1,10 +1,12 @@
 import { useState, type FormEvent } from 'react';
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
+import { Modal, ModalFooter } from '@/components/Modal';
 import { errorMessage, transactionService } from '@/services';
 import type { Category, CategoryType, Transaction, TransactionInput } from '@/types';
 import { defaultDateFor } from '@/utils/format';
+import styles from './TransactionsPage.module.css';
+import { Select } from '@/components/Select';
 
 /** Add / edit one income or expense entry */
 export function TransactionModal(props: {
@@ -74,7 +76,7 @@ export function TransactionModal(props: {
         <label className="field">
           <span>Amount</span>
           <input
-            className="amount-input"
+            className={styles.amountInput}
             type="number"
             inputMode="decimal"
             min="0.01"
@@ -91,16 +93,17 @@ export function TransactionModal(props: {
           <input required maxLength={200} placeholder={type === 'INCOME' ? 'e.g. Monthly salary' : 'e.g. Weekly groceries'} value={form.description} onChange={set('description')} />
         </label>
         <div className="form__row">
-          <label className="field">
-            <span>{catLabel}</span>
-            <select required value={form.categoryId} onChange={set('categoryId')}>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="field">
+            <label className="field__label" htmlFor="tx-category">
+              {catLabel}
+            </label>
+            <Select
+              id="tx-category"
+              value={form.categoryId}
+              onChange={(categoryId) => setForm((f) => ({ ...f, categoryId }))}
+              options={categories.map((c) => ({ value: c.id, label: c.name, color: c.color }))}
+            />
+          </div>
           <label className="field">
             <span>Date</span>
             <input type="date" required value={form.date} onChange={set('date')} />
@@ -112,20 +115,23 @@ export function TransactionModal(props: {
           </span>
           <input maxLength={500} placeholder="Shop, brand, anything to remember" value={form.note} onChange={set('note')} />
         </label>
-        <div className="modal__foot">
-          {!initial && (
-            <label className="check">
-              <input type="checkbox" checked={addAnother} onChange={(e) => setAddAnother(e.target.checked)} />
-              Add another after saving
-            </label>
-          )}
+        <ModalFooter
+          start={
+            !initial && (
+              <label className="check">
+                <input type="checkbox" checked={addAnother} onChange={(e) => setAddAnother(e.target.checked)} />
+                Add another after saving
+              </label>
+            )
+          }
+        >
           <button type="button" className="btn btn--secondary" onClick={onClose}>
             {saved ? 'Done' : 'Cancel'}
           </button>
           <button className="btn btn--primary" disabled={busy}>
             {busy ? 'Saving…' : 'Save'}
           </button>
-        </div>
+        </ModalFooter>
       </form>
     </Modal>
   );

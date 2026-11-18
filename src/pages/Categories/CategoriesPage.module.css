@@ -32,7 +32,7 @@
 .cat-item:focus-within .cat-item__actions {
   opacity: 1;
 }
-.cat-item--archived .cat-badge {
+.archived-badge {
   opacity: 0.5;
 }
 .cat-item--edit {
@@ -45,7 +45,7 @@
   flex: 1 1 200px;
   height: 38px;
 }
-.cat-item--edit .row-actions {
+.cat-item--edit :global(.row-actions) {
   margin-left: auto;
 }
 

@@ -1,1 +1,1 @@
-export { AuthLayout } from './AuthLayout';
+export { AuthFooter, AuthLayout, AuthLinks } from './AuthLayout';

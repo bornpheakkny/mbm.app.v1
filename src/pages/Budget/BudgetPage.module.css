@@ -123,14 +123,14 @@
   display: flex;
   gap: 6px;
 }
-.save-bar .btn--ghost {
+.save-bar :global(.btn--ghost) {
   color: var(--bg);
 }
-.save-bar .btn--ghost:hover:not(:disabled) {
+.save-bar :global(.btn--ghost):hover:not(:disabled) {
   background: rgb(255 255 255 / 0.12);
   color: var(--bg);
 }
-:root[data-theme='dark'] .save-bar .btn--ghost:hover:not(:disabled) {
+:root[data-theme='dark'] .save-bar :global(.btn--ghost):hover:not(:disabled) {
   background: rgb(0 0 0 / 0.12);
 }
 @keyframes save-in {

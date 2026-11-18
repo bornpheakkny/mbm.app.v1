@@ -4,6 +4,8 @@ import { ArrowDownLeft, ArrowUpRight, Pencil } from 'lucide-react';
 import { CategoryBadge } from '@/components/CategoryBadge';
 import { UsageBar } from '@/components/UsageBar';
 import type { SummaryRow, SummaryTotals } from '@/types';
+import { cx } from '@/utils/cx';
+import styles from './DashboardPage.module.css';
 
 /** Budgeted / actual / difference table. Becomes stacked cards on phones. */
 export function SummaryTable(props: {
@@ -33,7 +35,7 @@ export function SummaryTable(props: {
         </Link>
       </div>
       <div className="table-wrap">
-        <table className="table table--stack summary-table" style={{ '--stack-cols': 3 } as CSSProperties}>
+        <table className={cx('table table--stack', styles.summaryTable)} style={{ '--stack-cols': 3 } as CSSProperties}>
           <thead>
             <tr>
               <th>{firstCol}</th>
@@ -47,7 +49,7 @@ export function SummaryTable(props: {
               <tr key={r.categoryId}>
                 <td className="cell--title">
                   <CategoryBadge name={r.name} color={r.color} />
-                  {kind === 'expense' && <UsageBar used={r.actual} budget={r.budgeted} />}
+                  {kind === 'expense' && <UsageBar used={r.actual} budget={r.budgeted} className={styles.summaryUsage} />}
                 </td>
                 <td className="num" data-label="Budgeted">
                   {money(r.budgeted)}

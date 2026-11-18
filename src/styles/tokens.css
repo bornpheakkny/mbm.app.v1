@@ -5,12 +5,20 @@
 
 :root {
   /* Surfaces */
-  --bg: #f5f7fa;
+  --bg: #f8f9fb;
   --surface: #ffffff;
-  --surface-2: #f8fafc;
-  --surface-3: #f1f5f9;
-  --border: #e4e8ee;
-  --border-strong: #cfd6e0;
+  --surface-2: #f9fafb;
+  --surface-3: #f2f4f7;
+  --border: #e9ecf1;
+  --border-strong: #d4dae3;
+
+  /* App shell */
+  --app-bg: #f8f9fb;
+  --app-glow: radial-gradient(1000px 380px at 15% -80px, rgb(13 148 136 / 0.1), transparent 70%),
+    radial-gradient(800px 340px at 95% -100px, rgb(59 130 246 / 0.07), transparent 70%);
+  --sidebar-bg: #ffffff;
+  --topbar-bg: rgb(248 249 251 / 0.78);
+  --topbar-border: rgb(15 23 42 / 0.06);
 
   /* Text */
   --text: #0f172a;
@@ -39,7 +47,8 @@
   --violet-soft: #f0ebfe;
 
   /* Elevation & shape */
-  --shadow-xs: 0 1px 2px rgb(15 23 42 / 0.05);
+  --shadow-xs: 0 1px 2px rgb(16 24 40 / 0.04);
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.03);
   --shadow-sm: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
   --shadow-md: 0 6px 16px -4px rgb(15 23 42 / 0.1), 0 2px 6px -2px rgb(15 23 42 / 0.06);
   --shadow-lg: 0 24px 48px -12px rgb(15 23 42 / 0.25);
@@ -63,6 +72,9 @@
   /* Motion */
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
+  --scrollbar: #cfd6e0;
+  --scrollbar-hover: #aab4c3;
+
   color-scheme: light;
 }
 
@@ -73,6 +85,13 @@
   --surface-3: #1b2740;
   --border: #23314d;
   --border-strong: #31415f;
+
+  --app-bg: #0b1120;
+  --app-glow: radial-gradient(900px 340px at 18% -60px, rgb(45 212 191 / 0.08), transparent 70%),
+    radial-gradient(700px 300px at 92% -80px, rgb(96 165 250 / 0.06), transparent 70%);
+  --sidebar-bg: #0e1628;
+  --topbar-bg: rgb(11 17 32 / 0.8);
+  --topbar-border: rgb(255 255 255 / 0.06);
 
   --text: #e5ebf5;
   --text-2: #c3cddd;
@@ -98,10 +117,14 @@
   --violet-soft: rgb(139 92 246 / 0.18);
 
   --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.25);
   --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.35);
   --shadow-md: 0 8px 20px -6px rgb(0 0 0 / 0.5);
   --shadow-lg: 0 24px 48px -12px rgb(0 0 0 / 0.7);
   --overlay: rgb(2 6 23 / 0.7);
+
+  --scrollbar: #2b3a57;
+  --scrollbar-hover: #3b4d6e;
 
   color-scheme: dark;
 }

@@ -6,7 +6,7 @@
   padding: 48px 20px;
   gap: 6px;
 }
-.empty__icon {
+.icon {
   display: grid;
   place-items: center;
   width: 48px;
@@ -16,15 +16,15 @@
   background: var(--surface-3);
   color: var(--muted);
 }
-.empty__title {
+.title {
   font-weight: 600;
   color: var(--text);
 }
-.empty__text {
+.text {
   max-width: 360px;
   font-size: 13.5px;
   color: var(--muted);
 }
-.empty__action {
+.action {
   margin-top: 10px;
 }

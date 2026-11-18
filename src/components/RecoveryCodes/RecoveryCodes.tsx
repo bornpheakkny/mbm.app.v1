@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Check, Copy, Download } from 'lucide-react';
 import { APP_NAME } from '@/constants';
-import './RecoveryCodes.css';
+import styles from './RecoveryCodes.module.css';
 
 /** Shows freshly generated backup codes once, with copy / download */
 export function RecoveryCodes({ codes, email }: { codes: string[]; email: string }) {
@@ -28,12 +28,12 @@ export function RecoveryCodes({ codes, email }: { codes: string[]; email: string
   }
 
   return (
-    <div className="recovery">
+    <div className={styles.recovery}>
       <p className="small muted">
         Keep these somewhere safe, like a password manager. If you lose your phone or can't get email codes, each one
         lets you sign in once. <strong>They won't be shown again.</strong>
       </p>
-      <ol className="recovery__codes">
+      <ol className={styles.codes}>
         {codes.map((c) => (
           <li key={c}>{c}</li>
         ))}

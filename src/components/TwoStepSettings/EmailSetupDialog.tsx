@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Mail } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
+import { Modal, ModalFooter } from '@/components/Modal';
 import { errorMessage, mfaService } from '@/services';
 import type { User } from '@/types';
 
@@ -64,14 +64,14 @@ export function EmailSetupDialog({
         {!sent ? (
           <>
             <p className="small muted">First, let's check you receive our emails.</p>
-            <div className="modal__foot">
+            <ModalFooter>
               <button type="button" className="btn btn--secondary" onClick={onClose}>
                 Cancel
               </button>
               <button type="button" className="btn btn--primary" onClick={send} disabled={busy}>
                 {busy ? 'Sending…' : 'Send code'}
               </button>
-            </div>
+            </ModalFooter>
           </>
         ) : (
           <>
@@ -96,7 +96,7 @@ export function EmailSetupDialog({
                 <input type="password" required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </label>
             </div>
-            <div className="modal__foot">
+            <ModalFooter>
               <button type="button" className="link link--muted" onClick={send} disabled={busy}>
                 Resend code
               </button>
@@ -106,7 +106,7 @@ export function EmailSetupDialog({
               <button className="btn btn--primary" disabled={busy || code.length !== 6}>
                 {busy ? 'Checking…' : 'Turn on'}
               </button>
-            </div>
+            </ModalFooter>
           </>
         )}
       </form>

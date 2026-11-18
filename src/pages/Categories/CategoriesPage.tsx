@@ -8,7 +8,7 @@ import { categoryService, errorMessage } from '@/services';
 import type { CategoryType } from '@/types';
 import { AddCategory } from './AddCategory';
 import { CategoryItem } from './CategoryItem';
-import './CategoriesPage.css';
+import styles from './CategoriesPage.module.css';
 
 export type Run = (fn: () => Promise<unknown>) => Promise<boolean>;
 
@@ -59,7 +59,7 @@ export function CategoriesPage() {
               {list.loading && !list.data ? (
                 <EmptyState title="Loading…" />
               ) : (
-                <ul className="cat-list">
+                <ul className={styles.catList}>
                   {items.map((c) => (
                     <CategoryItem key={c.id} category={c} run={run} />
                   ))}

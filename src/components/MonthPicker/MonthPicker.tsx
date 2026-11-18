@@ -1,21 +1,22 @@
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMonth } from '@/context/MonthContext';
 import { currentMonth, formatMonthLabel, shiftMonth } from '@/utils/format';
-import './MonthPicker.css';
+import { cx } from '@/utils/cx';
+import styles from './MonthPicker.module.css';
 
 /** ‹ November 2026 › — shared month for every page. Click the label to pick any month. */
-export function MonthPicker() {
+export function MonthPicker({ className }: { className?: string }) {
   const { month, setMonth } = useMonth();
   const isCurrent = month === currentMonth();
 
   return (
-    <div className="month-picker">
-      <div className="month-picker__group">
+    <div className={cx(styles.picker, className)}>
+      <div className={styles.group}>
         <button className="icon-btn icon-btn--sm" aria-label="Previous month" onClick={() => setMonth(shiftMonth(month, -1))}>
           <ChevronLeft size={18} />
         </button>
-        <label className="month-picker__label">
-          <CalendarDays size={16} className="month-picker__cal" aria-hidden />
+        <label className={styles.label}>
+          <CalendarDays size={16} className={styles.cal} aria-hidden />
           <span>{formatMonthLabel(month)}</span>
           <input
             type="month"
@@ -29,7 +30,7 @@ export function MonthPicker() {
         </button>
       </div>
       {!isCurrent && (
-        <button className="btn btn--ghost btn--sm month-picker__today" onClick={() => setMonth(currentMonth())}>
+        <button className={cx('btn btn--ghost btn--sm', styles.today)} onClick={() => setMonth(currentMonth())}>
           Today
         </button>
       )}

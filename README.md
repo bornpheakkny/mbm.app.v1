@@ -24,10 +24,10 @@ Frontend for the Monthly Budget Management System.
 ```
 src/
   assets/         logo.svg
-  components/     One folder per reusable component: Name.tsx + Name.css + index.ts
+  components/     One folder per reusable component: Name.tsx + Name.module.css + index.ts
                   ActionMenu, Alert, Avatar, CategoryBadge, ChangeEmailModal, ConfirmDialog,
                   EmptyState, Modal, MonthPicker, PageHeader, RecoveryCodes, StatCard,
-                  ThemeToggle, TwoStepSettings, UsageBar, VerifyEmailBanner
+                  Select, ThemeToggle, TwoStepSettings, UsageBar, VerifyEmailBanner
   pages/          One folder per page (+ its private parts and styles), e.g.
                   Dashboard/ (DashboardPage, SummaryTable), Transactions/ (TransactionsPage,
                   TransactionModal), Users/ (UsersPage, UserModal, ResetPasswordModal), Login/ (+ MfaStep)…
@@ -43,6 +43,10 @@ src/
   App.tsx         Root component (providers + router)
   main.tsx        Entry point
 ```
+
+**Styling:** components, pages and layouts use **CSS Modules** (`Name.module.css`, imported as `styles` and used as `styles.someClass`; kebab-case class names are available in camelCase). Shared primitives (`.btn`, `.card`, `.field`, `.table`, `.pill`…) and design tokens are global in `src/styles/`. Combine classes with `cx()` from `utils/cx`.
+
+**Dropdowns:** use `<Select>` from `@/components/Select` instead of a native `<select>`. Native option lists can't be styled, so `Select` renders its own list (colored dots, icons, descriptions, keyboard support) and a bottom sheet on phones.
 
 **Responsive layout:** fixed sidebar ≥1024px · slide-in drawer below that · bottom tab bar, stacked table cards and bottom-sheet dialogs on phones (≤640px). Icons come from [lucide-react](https://lucide.dev).
 

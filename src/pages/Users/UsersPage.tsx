@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from 'react';
 import {
+  CircleDashed,
   KeyRound,
   Pencil,
   Search,
@@ -8,6 +9,7 @@ import {
   Trash2,
   UserCheck,
   UserPlus,
+  UserRound,
   UserX,
   Users,
   UsersRound,
@@ -27,7 +29,9 @@ import type { AdminUser, Role } from '@/types';
 import { formatDateTime } from '@/utils/format';
 import { ResetPasswordModal } from './ResetPasswordModal';
 import { UserModal } from './UserModal';
-import './UsersPage.css';
+import { cx } from '@/utils/cx';
+import styles from './UsersPage.module.css';
+import { Select } from '@/components/Select';
 
 type Editing = { kind: 'new' } | { kind: 'edit'; user: AdminUser } | { kind: 'password'; user: AdminUser };
 
@@ -126,16 +130,28 @@ export function UsersPage() {
           <Search size={16} />
           <input placeholder="Search name or email…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search users" />
         </div>
-        <select value={role} onChange={(e) => setRole(e.target.value as Role | '')} aria-label="Role">
-          <option value="">All roles</option>
-          <option value="USER">Users</option>
-          <option value="ADMIN">Admins</option>
-        </select>
-        <select value={status} onChange={(e) => setStatus(e.target.value as 'active' | 'disabled' | '')} aria-label="Status">
-          <option value="">Any status</option>
-          <option value="active">Active</option>
-          <option value="disabled">Disabled</option>
-        </select>
+        <Select
+          className="toolbar__filter"
+          aria-label="Role"
+          value={role}
+          onChange={setRole}
+          options={[
+            { value: '', label: 'All roles', icon: Users },
+            { value: 'USER', label: 'Users', icon: UserRound },
+            { value: 'ADMIN', label: 'Admins', icon: ShieldCheck },
+          ]}
+        />
+        <Select
+          className="toolbar__filter"
+          aria-label="Status"
+          value={status}
+          onChange={setStatus}
+          options={[
+            { value: '', label: 'Any status', icon: CircleDashed },
+            { value: 'active', label: 'Active', icon: UserCheck },
+            { value: 'disabled', label: 'Disabled', icon: UserX },
+          ]}
+        />
       </div>
 
       {(error || list.error) && <Alert onClose={error ? () => setError(null) : undefined}>{error ?? list.error}</Alert>}
@@ -154,7 +170,7 @@ export function UsersPage() {
           </EmptyState>
         ) : (
           <div className="table-wrap">
-            <table className="table table--stack users-table" style={{ '--stack-cols': 2 } as CSSProperties}>
+            <table className={cx('table table--stack', styles.usersTable)} style={{ '--stack-cols': 2 } as CSSProperties}>
               <thead>
                 <tr>
                   <th>User</th>
@@ -172,14 +188,14 @@ export function UsersPage() {
                   return (
                     <tr key={u.id} className={u.active ? '' : 'row--muted'}>
                       <td className="cell--title">
-                        <div className="user-cell">
+                        <div className={styles.userCell}>
                           <Avatar name={u.name} />
-                          <div className="user-cell__text">
-                            <div className="user-cell__name">
+                          <div className={styles.userCellText}>
+                            <div className={styles.userCellName}>
                               {u.name}
                               {self && <span className="pill pill--primary">You</span>}
                             </div>
-                            <div className="user-cell__email">{u.email}</div>
+                            <div className={styles.userCellEmail}>{u.email}</div>
                           </div>
                         </div>
                       </td>
@@ -205,7 +221,7 @@ export function UsersPage() {
                       <td className="muted nowrap" data-label="Last login">
                         {formatDateTime(u.lastLoginAt)}
                       </td>
-                      <td className="cell--actions users-table__actions">
+                      <td className={cx('cell--actions', styles.usersTableActions)}>
                         <div className="row-actions">
                           <button className="icon-btn icon-btn--sm" aria-label={`Edit ${u.name}`} title="Edit" onClick={() => setEditing({ kind: 'edit', user: u })}>
                             <Pencil size={16} />

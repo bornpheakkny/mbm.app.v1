@@ -7,7 +7,8 @@ import { useAuth } from '@/context/AuthContext';
 import { formatDateTime } from '@/utils/format';
 import { PasswordCard } from './PasswordCard';
 import { ProfileCard } from './ProfileCard';
-import './AccountPage.css';
+import { cx } from '@/utils/cx';
+import styles from './AccountPage.module.css';
 
 /** Profile, password, email and two-step verification settings */
 export function AccountPage() {
@@ -17,16 +18,16 @@ export function AccountPage() {
   if (!user) return null;
 
   return (
-    <div className="page account-page">
+    <div className="page">
       <PageHeader title="My account" description="Manage your profile, sign-in and security." />
 
-      <section className="card account-hero">
+      <section className={cx('card', styles.accountHero)}>
         <Avatar name={user.name} size="lg" />
-        <div className="account-hero__text">
+        <div className={styles.accountHeroText}>
           <h2>{user.name}</h2>
           <span className="muted">{user.email}</span>
         </div>
-        <div className="account-hero__tags">
+        <div className={styles.accountHeroTags}>
           {user.emailVerified ? (
             <span className="pill pill--success">
               <BadgeCheck /> Email verified

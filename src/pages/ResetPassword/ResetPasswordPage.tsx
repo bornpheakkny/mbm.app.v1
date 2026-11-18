@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Alert } from '@/components/Alert';
 import { useAuth } from '@/context/AuthContext';
-import { AuthLayout } from '@/layouts/AuthLayout';
+import { AuthFooter, AuthLayout } from '@/layouts/AuthLayout';
 import { authService, errorMessage } from '@/services';
 
 /** Opened from the emailed link: /reset-password?token=… */
@@ -81,9 +81,9 @@ export function ResetPasswordPage() {
           </>
         )}
       </form>
-      <p className="auth__switch">
+      <AuthFooter>
         <Link to="/login">Back to log in</Link>
-      </p>
+      </AuthFooter>
     </AuthLayout>
   );
 }

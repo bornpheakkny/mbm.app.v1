@@ -1,4 +1,4 @@
-.modal-backdrop {
+.backdrop {
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -7,7 +7,7 @@
   padding: 20px;
   background: var(--overlay);
   backdrop-filter: blur(3px);
-  animation: modal-fade 0.18s ease;
+  animation: fade 0.18s ease;
 }
 .modal {
   width: 100%;
@@ -18,40 +18,40 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  animation: modal-pop 0.22s var(--ease);
+  animation: pop 0.22s var(--ease);
 }
-.modal--sm {
+.sm {
   max-width: 420px;
 }
-.modal--md {
+.md {
   max-width: 520px;
 }
-.modal--lg {
+.lg {
   max-width: 680px;
 }
-.modal__handle {
+.handle {
   display: none;
 }
-.modal__head {
+.head {
   display: flex;
   align-items: flex-start;
   gap: 14px;
   padding: 20px 20px 0;
 }
-.modal__heading {
+.heading {
   flex: 1;
   min-width: 0;
   padding-top: 4px;
 }
-.modal__heading h2 {
+.title {
   font-size: 17px;
 }
-.modal__desc {
+.desc {
   margin-top: 4px;
   font-size: 13.5px;
   color: var(--muted);
 }
-.modal__icon {
+.icon {
   display: grid;
   place-items: center;
   width: 40px;
@@ -61,17 +61,17 @@
   background: var(--primary-soft);
   color: var(--primary);
 }
-.modal__icon--danger {
+.iconDanger {
   background: var(--danger-soft);
   color: var(--danger);
 }
-.modal__close {
+.close {
   margin: -2px -6px 0 0;
 }
-.modal__body {
+.body {
   padding: 18px 20px 20px;
 }
-.modal__foot {
+.foot {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -80,22 +80,22 @@
   padding-top: 16px;
   border-top: 1px solid var(--border);
 }
-.modal__foot .check {
+.footStart {
   margin-right: auto;
 }
 
-@keyframes modal-fade {
+@keyframes fade {
   from {
     opacity: 0;
   }
 }
-@keyframes modal-pop {
+@keyframes pop {
   from {
     opacity: 0;
     transform: translateY(8px) scale(0.98);
   }
 }
-@keyframes modal-sheet {
+@keyframes sheet {
   from {
     transform: translateY(100%);
   }
@@ -103,7 +103,7 @@
 
 /* Phones: bottom sheet */
 @media (max-width: 640px) {
-  .modal-backdrop {
+  .backdrop {
     place-items: end stretch;
     padding: 0;
   }
@@ -113,9 +113,9 @@
     border-radius: 20px 20px 0 0;
     border-bottom: none;
     padding-bottom: env(safe-area-inset-bottom);
-    animation: modal-sheet 0.28s var(--ease);
+    animation: sheet 0.28s var(--ease);
   }
-  .modal__handle {
+  .handle {
     display: block;
     width: 40px;
     height: 4px;
@@ -123,19 +123,19 @@
     border-radius: 99px;
     background: var(--border-strong);
   }
-  .modal__head {
+  .head {
     padding: 12px 16px 0;
   }
-  .modal__body {
+  .body {
     padding: 16px;
   }
-  .modal__foot {
+  .foot {
     flex-wrap: wrap;
   }
-  .modal__foot .btn {
+  .foot > :global(.btn) {
     flex: 1 1 auto;
   }
-  .modal__foot .check {
+  .footStart {
     flex-basis: 100%;
   }
 }

@@ -15,7 +15,7 @@
 .account-hero__text h2 {
   font-size: 18px;
 }
-.account-hero__text .muted {
+.account-hero__text :global(.muted) {
   overflow: hidden;
   text-overflow: ellipsis;
 }

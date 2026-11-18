@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { VerifyEmailBanner } from '@/components/VerifyEmailBanner';
+import { cx } from '@/utils/cx';
 import { BottomNav } from './BottomNav';
 import { Sidebar } from './Sidebar';
 import { Topbar } from './Topbar';
-import './AppLayout.css';
+import styles from './AppLayout.module.css';
 
 /**
  * Signed-in shell.
@@ -17,7 +18,8 @@ export function AppLayout() {
   // The drawer remembers the page it was opened on, so navigating anywhere closes it
   const [openedOn, setOpenedOn] = useState<string | null>(null);
   const drawerOpen = openedOn === pathname;
-  const setDrawerOpen = (open: boolean) => setOpenedOn(open ? pathname : null);
+  const openDrawer = () => setOpenedOn(pathname);
+  const closeDrawer = () => setOpenedOn(null);
 
   // Start each page at the top
   useEffect(() => {
@@ -32,19 +34,19 @@ export function AppLayout() {
   }, [drawerOpen]);
 
   return (
-    <div className={`shell ${drawerOpen ? 'shell--drawer-open' : ''}`}>
-      <Sidebar onClose={() => setDrawerOpen(false)} />
-      <div className="shell__backdrop" onClick={() => setDrawerOpen(false)} aria-hidden />
+    <div className={cx(styles.shell, drawerOpen && styles.drawerOpen)}>
+      <Sidebar onClose={closeDrawer} />
+      <div className={styles.backdrop} onClick={closeDrawer} aria-hidden />
 
-      <div className="shell__main">
-        <Topbar onMenu={() => setDrawerOpen(true)} />
+      <div className={styles.main}>
+        <Topbar onMenu={openDrawer} />
         <VerifyEmailBanner />
-        <main className="shell__content">
+        <main className={styles.content}>
           <Outlet />
         </main>
       </div>
 
-      <BottomNav onMore={() => setDrawerOpen(true)} />
+      <BottomNav onMore={openDrawer} />
     </div>
   );
 }

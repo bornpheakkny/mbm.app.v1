@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import './PageHeader.css';
+import styles from './PageHeader.module.css';
 
 /** Page title, short description and action buttons (wrap below the title on phones) */
 export function PageHeader({
@@ -14,13 +14,13 @@ export function PageHeader({
   eyebrow?: ReactNode;
 }) {
   return (
-    <header className="page-header">
-      <div className="page-header__text">
-        {eyebrow && <div className="page-header__eyebrow">{eyebrow}</div>}
-        <h1>{title}</h1>
-        {description && <p className="page-header__desc">{description}</p>}
+    <header className={styles.header}>
+      <div className={styles.text}>
+        {eyebrow && <div className={styles.eyebrow}>{eyebrow}</div>}
+        <h1 className={styles.title}>{title}</h1>
+        {description && <p className={styles.desc}>{description}</p>}
       </div>
-      {actions && <div className="page-header__actions">{actions}</div>}
+      {actions && <div className={styles.actions}>{actions}</div>}
     </header>
   );
 }

@@ -1,15 +1,15 @@
-.page-header {
+.header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
 }
-.page-header__text {
+.text {
   min-width: 0;
   flex: 1 1 320px;
 }
-.page-header__eyebrow {
+.eyebrow {
   margin-bottom: 4px;
   font-size: 12px;
   font-weight: 600;
@@ -17,30 +17,30 @@
   text-transform: uppercase;
   color: var(--primary);
 }
-.page-header__desc {
+.desc {
   margin-top: 6px;
   color: var(--muted);
   font-size: 14px;
 }
-.page-header__actions {
+.actions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 @media (max-width: 640px) {
-  h1 {
+  .title {
     font-size: 21px;
   }
-  .page-header {
+  .header {
     gap: 12px;
   }
-  .page-header__text {
+  .text {
     flex-basis: 100%;
   }
-  .page-header__actions {
+  .actions {
     width: 100%;
   }
-  .page-header__actions > .btn {
+  .actions > * {
     flex: 1 1 0;
   }
 }

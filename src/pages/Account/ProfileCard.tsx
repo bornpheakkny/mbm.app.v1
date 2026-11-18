@@ -2,9 +2,10 @@ import { useState, type FormEvent } from 'react';
 import { UserRound } from 'lucide-react';
 import { Alert } from '@/components/Alert';
 import { ChangeEmailModal } from '@/components/ChangeEmailModal';
-import { CURRENCIES } from '@/constants';
+import { CURRENCY_OPTIONS } from '@/constants';
 import { useAuth } from '@/context/AuthContext';
 import { authService, errorMessage } from '@/services';
+import { Select } from '@/components/Select';
 
 export function ProfileCard() {
   const { user, setUser } = useAuth();
@@ -63,15 +64,13 @@ export function ProfileCard() {
             </span>
           )}
         </div>
-        <label className="field">
-          <span>Currency</span>
-          <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-            {CURRENCIES.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
+        <div className="field">
+          <label className="field__label" htmlFor="profile-currency">
+            Currency
+          </label>
+          <Select id="profile-currency" value={currency} onChange={setCurrency} options={CURRENCY_OPTIONS} />
           <span className="field__hint">Used to show amounts across the app.</span>
-        </label>
+        </div>
         <div>
           <button className="btn btn--primary" disabled={busy || !dirty}>
             {busy ? 'Saving…' : 'Save profile'}

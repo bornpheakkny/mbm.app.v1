@@ -14,7 +14,8 @@ import { useAsync } from '@/hooks/useAsync';
 import { summaryService } from '@/services';
 import { formatMoney, formatMonthLabel, formatPercent, formatShortMonth } from '@/utils/format';
 import { SummaryTable } from './SummaryTable';
-import './DashboardPage.css';
+import { cx } from '@/utils/cx';
+import styles from './DashboardPage.module.css';
 
 export function DashboardPage() {
   const { month } = useMonth();
@@ -100,7 +101,7 @@ export function DashboardPage() {
       </section>
 
       <div className="grid-2">
-        <section className="card chart-card">
+        <section className={cx('card', styles.chartCard)}>
           <div className="card__title">
             <h2>
               <span className="card__icon">
@@ -111,7 +112,7 @@ export function DashboardPage() {
             <Legend items={[{ label: 'Planned', color: c.budgeted }, { label: 'Spent', color: c.actual }]} />
           </div>
           {s && s.expenses.rows.length > 0 ? (
-            <div className="chart">
+            <div className={styles.chart}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={s.expenses.rows} margin={{ top: 4, right: 4, left: -8, bottom: 0 }} barGap={2}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={c.grid} />
@@ -130,7 +131,7 @@ export function DashboardPage() {
           )}
         </section>
 
-        <section className="card chart-card">
+        <section className={cx('card', styles.chartCard)}>
           <div className="card__title">
             <h2>
               <span className="card__icon">
@@ -141,7 +142,7 @@ export function DashboardPage() {
             <Legend items={[{ label: 'Income', color: c.income }, { label: 'Expenses', color: c.expenses }]} />
           </div>
           {trend.data ? (
-            <div className="chart">
+            <div className={styles.chart}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={trend.data} margin={{ top: 4, right: 4, left: -8, bottom: 0 }} barGap={3}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={c.grid} />
@@ -187,7 +188,7 @@ export function DashboardPage() {
 
 function Legend({ items }: { items: { label: string; color: string }[] }) {
   return (
-    <div className="chart-legend">
+    <div className={styles.chartLegend}>
       {items.map((i) => (
         <span key={i.label}>
           <i style={{ background: i.color }} />

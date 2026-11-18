@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Mail } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
+import { Modal, ModalFooter } from '@/components/Modal';
 import { useAuth } from '@/context/AuthContext';
 import { authService, errorMessage } from '@/services';
 
@@ -51,14 +51,14 @@ export function ChangeEmailModal({ onClose, onSent }: { onClose: () => void; onS
           <span>Your password</span>
           <input type="password" required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
-        <div className="modal__foot">
+        <ModalFooter>
           <button type="button" className="btn btn--secondary" onClick={onClose}>
             Cancel
           </button>
           <button className="btn btn--primary" disabled={busy}>
             {busy ? 'Sending…' : 'Send confirmation link'}
           </button>
-        </div>
+        </ModalFooter>
       </form>
     </Modal>
   );

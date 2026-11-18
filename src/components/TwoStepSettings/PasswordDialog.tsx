@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { KeyRound, ShieldOff } from 'lucide-react';
 import { Alert } from '@/components/Alert';
-import { Modal } from '@/components/Modal';
+import { Modal, ModalFooter } from '@/components/Modal';
 import { errorMessage } from '@/services';
 
 /** Asks for the current password before a sensitive two-step change */
@@ -51,14 +51,14 @@ export function PasswordDialog({
           <span>Confirm with your password</span>
           <input type="password" required autoFocus autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
-        <div className="modal__foot">
+        <ModalFooter>
           <button type="button" className="btn btn--secondary" onClick={onClose}>
             Cancel
           </button>
           <button className={`btn ${danger ? 'btn--danger' : 'btn--primary'}`} disabled={busy}>
             {busy ? 'Please wait…' : action}
           </button>
-        </div>
+        </ModalFooter>
       </form>
     </Modal>
   );

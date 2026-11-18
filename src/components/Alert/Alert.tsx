@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { AlertTriangle, CheckCircle2, Info, X } from 'lucide-react';
-import './Alert.css';
+import { cx } from '@/utils/cx';
+import styles from './Alert.module.css';
 
 type Tone = 'error' | 'info' | 'success' | 'warning';
 
@@ -10,11 +11,11 @@ const ICONS = { error: AlertTriangle, warning: AlertTriangle, success: CheckCirc
 export function Alert({ children, tone = 'error', onClose }: { children: ReactNode; tone?: Tone; onClose?: () => void }) {
   const Icon = ICONS[tone];
   return (
-    <div className={`alert alert--${tone}`} role={tone === 'error' ? 'alert' : 'status'}>
-      <Icon size={18} className="alert__icon" aria-hidden />
-      <div className="alert__body">{children}</div>
+    <div className={cx(styles.alert, styles[tone])} role={tone === 'error' ? 'alert' : 'status'}>
+      <Icon size={18} className={styles.icon} aria-hidden />
+      <div className={styles.body}>{children}</div>
       {onClose && (
-        <button type="button" className="alert__close" onClick={onClose} aria-label="Dismiss">
+        <button type="button" className={styles.close} onClick={onClose} aria-label="Dismiss">
           <X size={16} />
         </button>
       )}

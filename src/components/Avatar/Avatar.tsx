@@ -1,4 +1,5 @@
-import './Avatar.css';
+import { cx } from '@/utils/cx';
+import styles from './Avatar.module.css';
 
 const PALETTE = ['teal', 'blue', 'violet', 'orange', 'pink', 'green'] as const;
 
@@ -7,7 +8,7 @@ export function Avatar({ name, size = 'md' }: { name: string; size?: 'sm' | 'md'
   const hash = [...name].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 0);
   const tone = PALETTE[hash % PALETTE.length];
   return (
-    <span className={`avatar avatar--${size} avatar--${tone}`} aria-hidden>
+    <span className={cx(styles.avatar, styles[size], styles[tone])} aria-hidden>
       {name.trim().charAt(0).toUpperCase() || '?'}
     </span>
   );

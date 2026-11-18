@@ -1,10 +1,11 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alert } from '@/components/Alert';
-import { CURRENCIES } from '@/constants';
+import { CURRENCY_OPTIONS } from '@/constants';
 import { useAuth } from '@/context/AuthContext';
-import { AuthLayout } from '@/layouts/AuthLayout';
+import { AuthFooter, AuthLayout } from '@/layouts/AuthLayout';
 import { errorMessage } from '@/services';
+import { Select } from '@/components/Select';
 
 export function RegisterPage() {
   const { register } = useAuth();
@@ -66,21 +67,24 @@ export function RegisterPage() {
             />
           </label>
         </div>
-        <label className="field">
-          <span>Currency</span>
-          <select value={form.currency} onChange={set('currency')}>
-            {CURRENCIES.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
-        </label>
+        <div className="field">
+          <label className="field__label" htmlFor="register-currency">
+            Currency
+          </label>
+          <Select
+            id="register-currency"
+            value={form.currency}
+            onChange={(currency) => setForm((f) => ({ ...f, currency }))}
+            options={CURRENCY_OPTIONS}
+          />
+        </div>
         <button className="btn btn--primary btn--lg btn--block" disabled={busy}>
           {busy ? 'Creating account…' : 'Create account'}
         </button>
       </form>
-      <p className="auth__switch">
+      <AuthFooter>
         Already have an account? <Link to="/login">Log in</Link>
-      </p>
+      </AuthFooter>
     </AuthLayout>
   );
 }

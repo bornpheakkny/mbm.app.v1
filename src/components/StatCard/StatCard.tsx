@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import './StatCard.css';
+import { cx } from '@/utils/cx';
+import styles from './StatCard.module.css';
 
 type Tone = 'default' | 'good' | 'bad';
 type Accent = 'teal' | 'green' | 'orange' | 'blue' | 'violet' | 'red';
@@ -22,17 +23,17 @@ export function StatCard({
   tone?: Tone;
 }) {
   return (
-    <div className={`stat stat--${tone}`}>
-      <div className="stat__top">
-        <span className="stat__label">{label}</span>
+    <div className={cx(styles.stat, tone !== 'default' && styles[tone])}>
+      <div className={styles.top}>
+        <span className={styles.label}>{label}</span>
         {Icon && (
-          <span className={`stat__icon stat__icon--${accent}`}>
+          <span className={cx(styles.icon, styles[accent])}>
             <Icon size={18} />
           </span>
         )}
       </div>
-      <div className="stat__value">{value}</div>
-      {hint && <div className="stat__hint">{hint}</div>}
+      <div className={styles.value}>{value}</div>
+      {hint && <div className={styles.hint}>{hint}</div>}
     </div>
   );
 }

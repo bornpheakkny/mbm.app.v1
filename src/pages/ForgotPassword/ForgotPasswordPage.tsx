@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert } from '@/components/Alert';
-import { AuthLayout } from '@/layouts/AuthLayout';
+import { AuthFooter, AuthLayout } from '@/layouts/AuthLayout';
 import { authService, errorMessage } from '@/services';
 
 export function ForgotPasswordPage() {
@@ -47,9 +47,9 @@ export function ForgotPasswordPage() {
           </button>
         </form>
       )}
-      <p className="auth__switch">
+      <AuthFooter>
         Remembered it? <Link to="/login">Back to log in</Link>
-      </p>
+      </AuthFooter>
     </AuthLayout>
   );
 }

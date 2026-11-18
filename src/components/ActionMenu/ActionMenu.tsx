@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { MoreHorizontal, type LucideIcon } from 'lucide-react';
-import './ActionMenu.css';
+import { cx } from '@/utils/cx';
+import styles from './ActionMenu.module.css';
 
 export interface ActionItem {
   label: string;
@@ -61,7 +62,7 @@ export function ActionMenu({ items, label = 'More actions' }: { items: ActionIte
       <button
         ref={btn}
         type="button"
-        className={`icon-btn icon-btn--sm ${open ? 'action-menu__trigger--open' : ''}`}
+        className={cx('icon-btn icon-btn--sm', open && styles.triggerOpen)}
         aria-label={label}
         aria-haspopup="menu"
         aria-expanded={open}
@@ -73,7 +74,7 @@ export function ActionMenu({ items, label = 'More actions' }: { items: ActionIte
         createPortal(
           <div
             ref={menu}
-            className="action-menu"
+            className={styles.menu}
             role="menu"
             style={pos ? { top: pos.top, left: pos.left } : { visibility: 'hidden' }}
           >
@@ -81,7 +82,7 @@ export function ActionMenu({ items, label = 'More actions' }: { items: ActionIte
               <button
                 key={text}
                 role="menuitem"
-                className={`action-menu__item ${danger ? 'action-menu__item--danger' : ''}`}
+                className={cx(styles.item, danger && styles.danger)}
                 onClick={() => {
                   setOpen(false);
                   onSelect();

@@ -11,7 +11,8 @@ import { useAsync } from '@/hooks/useAsync';
 import { budgetService, categoryService, errorMessage } from '@/services';
 import type { Category } from '@/types';
 import { formatMoney, formatMonthLabel, shiftMonth } from '@/utils/format';
-import './BudgetPage.css';
+import { cx } from '@/utils/cx';
+import styles from './BudgetPage.module.css';
 
 /** Planned amount per category for the selected month */
 export function BudgetPage() {
@@ -104,19 +105,19 @@ export function BudgetPage() {
           </span>
           {title}
         </h2>
-        <span className="budget__sum">{money(sum(cats))}</span>
+        <span className={styles.budgetSum}>{money(sum(cats))}</span>
       </div>
       {cats.length === 0 ? (
         <EmptyState title="No categories">Add some on the Categories page.</EmptyState>
       ) : (
-        <div className="budget-list">
+        <div className={styles.budgetList}>
           {cats.map((c) => {
             const changed = (values[c.id] ?? '') !== (saved[c.id] ?? '');
             return (
-              <label key={c.id} className={`budget-row ${changed ? 'budget-row--changed' : ''}`}>
+              <label key={c.id} className={cx(styles.budgetRow, changed && styles.budgetRowChanged)}>
                 <CategoryBadge name={c.name} color={c.color} />
-                <span className="budget-row__input">
-                  <span className="budget-row__cur">{cur}</span>
+                <span className={styles.budgetRowInput}>
+                  <span className={styles.budgetRowCur}>{cur}</span>
                   <input
                     type="number"
                     inputMode="decimal"
@@ -137,7 +138,7 @@ export function BudgetPage() {
   );
 
   return (
-    <div className="page budget-page">
+    <div className="page">
       <PageHeader
         eyebrow={formatMonthLabel(month)}
         title="Budget plan"
@@ -147,7 +148,7 @@ export function BudgetPage() {
             <button className="btn btn--secondary" onClick={copyPrevious} disabled={busy}>
               <Copy size={16} /> Copy last month
             </button>
-            <button className="btn btn--primary budget__save-top" onClick={save} disabled={busy || !dirty}>
+            <button className={cx('btn btn--primary', styles.budgetSaveTop)} onClick={save} disabled={busy || !dirty}>
               <Save size={16} /> {busy ? 'Saving…' : 'Save'}
             </button>
           </>
@@ -161,22 +162,22 @@ export function BudgetPage() {
         </Alert>
       )}
 
-      <div className="budget-summary">
+      <div className={styles.budgetSummary}>
         <div>
-          <span className="budget-summary__label">Expected income</span>
-          <span className="budget-summary__value pos">{money(plannedIn)}</span>
+          <span className={styles.budgetSummaryLabel}>Expected income</span>
+          <span className={cx('pos', styles.budgetSummaryValue)}>{money(plannedIn)}</span>
         </div>
-        <span className="budget-summary__op">−</span>
+        <span className={styles.budgetSummaryOp}>−</span>
         <div>
-          <span className="budget-summary__label">Planned spending</span>
-          <span className="budget-summary__value">{money(plannedOut)}</span>
+          <span className={styles.budgetSummaryLabel}>Planned spending</span>
+          <span className={styles.budgetSummaryValue}>{money(plannedOut)}</span>
         </div>
-        <span className="budget-summary__op">=</span>
-        <div className="budget-summary__result">
-          <span className="budget-summary__label">
+        <span className={styles.budgetSummaryOp}>=</span>
+        <div className={styles.budgetSummaryResult}>
+          <span className={styles.budgetSummaryLabel}>
             <PiggyBank size={14} /> Planned left over
           </span>
-          <span className={`budget-summary__value ${plannedLeft < 0 ? 'neg' : 'pos'}`}>{money(plannedLeft)}</span>
+          <span className={cx(styles.budgetSummaryValue, plannedLeft < 0 ? 'neg' : 'pos')}>{money(plannedLeft)}</span>
         </div>
       </div>
 
@@ -194,9 +195,9 @@ export function BudgetPage() {
       )}
 
       {dirty && (
-        <div className="save-bar" role="region" aria-label="Unsaved changes">
+        <div className={styles.saveBar} role="region" aria-label="Unsaved changes">
           <span>You have unsaved changes</span>
-          <div className="save-bar__actions">
+          <div className={styles.saveBarActions}>
             <button className="btn btn--ghost btn--sm" onClick={() => setValues(saved)} disabled={busy}>
               Discard
             </button>

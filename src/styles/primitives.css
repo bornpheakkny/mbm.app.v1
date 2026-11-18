@@ -47,7 +47,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xs);
+  box-shadow: var(--shadow-card);
   padding: 20px;
   min-width: 0;
 }
@@ -416,13 +416,13 @@ input[type='checkbox'] {
 .toolbar__search {
   flex: 1 1 260px;
 }
-.toolbar select {
+.toolbar__filter {
   width: auto;
-  min-width: 160px;
-  flex: 0 1 200px;
+  min-width: 170px;
+  flex: 0 1 210px;
 }
 @media (max-width: 640px) {
-  .toolbar select {
+  .toolbar__filter {
     flex: 1 1 140px;
     min-width: 0;
   }
