@@ -11,6 +11,10 @@ Frontend for the Monthly Budget Management System.
 - **Income & Expenses** — monthly list with search, category filter, totals; add / edit / delete in a modal ("Add another" for quick entry).
 - **Budget plan** — set budgeted amounts per category for a month; planned left over; copy from last month.
 - **Categories** — add, rename, recolor, archive, delete.
+- **My account** — edit name and currency, change password, email verification status, two-step verification (authenticator app or email code, backup codes).
+- **Account recovery** — verify-email link, "Forgot password?" → emailed reset link → choose a new password.
+- **Two-step login** — after the password, enter the app / email code or a backup code.
+- **User accounts** (admins only) — list, search and filter accounts; add users, edit details and role, enable / disable, reset password, delete. Every account has its own private budget.
 - **Month picker** — shared by every page (‹ › or pick any month).
 - Responsive down to phone width.
 
@@ -18,13 +22,22 @@ Frontend for the Monthly Budget Management System.
 
 ```
 src/
-  api/          axios client (token + errors), typed endpoints, types
-  components/   Layout, MonthPicker, ProtectedRoute, ui (Badge, StatCard, Modal, UsageBar…)
-  context/      AuthContext, MonthContext
+  assets/       Images, icons, fonts (logo.svg)
+  components/   Reusable UI: MonthPicker, ui/ (Alert, CategoryBadge, Empty, Modal, StatCard, UsageBar)
+  pages/        Page-level components: Login, Register, Dashboard, Transactions (income + expenses),
+                Budget, Categories, Account, Users (admin)
+  layouts/      AppLayout (sidebar + top bar), AuthLayout (login / register card)
   hooks/        useAsync (load data, ignore stale responses, reload)
-  lib/          money / date formatting, category colors
-  pages/        Auth, Dashboard, Transactions (income + expenses), Budget, Categories
+  context/      AuthContext, MonthContext
+  services/     apiClient (axios, token, errors) + one service per API area (auth, categories,
+                budgets, transactions, summary, admin)
+  utils/        Money / date formatting, category color lookup
+  constants/    API config, currencies, category colors, navigation items
+  routes/       AppRoutes (route table), RouteGuards (Protected, Guest, Admin)
   styles/       index.css (CSS variables, no UI framework)
+  types/        Shared TypeScript types for API data
+  App.tsx       Root component (router + providers)
+  main.tsx      Entry point
 ```
 
 ## Local development
@@ -32,7 +45,7 @@ src/
 ```bash
 npm install
 cp .env.example .env     # VITE_API_URL=http://localhost:4000/api
-npm run dev              # http://localhost:5173
+npm start                # http://localhost:5173 (same as npm run dev)
 ```
 
 Run the API locally first (see `mbm.api.v1`). Demo login after seeding: `demo@mbm.app` / `demo12345`.

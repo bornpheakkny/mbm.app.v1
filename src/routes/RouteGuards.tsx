@@ -10,6 +10,13 @@ export function ProtectedRoute() {
   return <Outlet />;
 }
 
+/** Nested inside ProtectedRoute: only ADMIN users get through */
+export function AdminRoute() {
+  const { user } = useAuth();
+  if (user?.role !== 'ADMIN') return <Navigate to="/" replace />;
+  return <Outlet />;
+}
+
 export function GuestRoute() {
   const { user, loading } = useAuth();
   if (loading) return <div className="page-loading">Loading…</div>;

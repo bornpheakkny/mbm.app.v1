@@ -1,11 +1,10 @@
 import { useMemo, useState, type FormEvent } from 'react';
-import { errorMessage } from '@/api/client';
-import { categoryApi, transactionApi } from '@/api/endpoints';
-import type { Category, CategoryType, Transaction, TransactionInput } from '@/api/types';
+import { categoryService, errorMessage, transactionService } from '@/services';
+import type { Category, CategoryType, Transaction, TransactionInput } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { useMonth } from '@/context/MonthContext';
 import { useAsync } from '@/hooks/useAsync';
-import { defaultDateFor, formatDate, formatMoney, formatMonthLabel } from '@/lib/format';
+import { defaultDateFor, formatDate, formatMoney, formatMonthLabel } from '@/utils/format';
 import { Alert, CategoryBadge, Empty, Modal } from '@/components/ui';
 
 const COPY: Record<CategoryType, { title: string; total: string; cat: string; all: string; add: string }> = {
@@ -24,9 +23,9 @@ export function TransactionsPage({ type }: { type: CategoryType }) {
   const [editing, setEditing] = useState<Transaction | 'new' | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const categories = useAsync(() => categoryApi.list({ type }), [type]);
+  const categories = useAsync(() => categoryService.list({ type }), [type]);
   const list = useAsync(
-    () => transactionApi.list({ month, type, categoryId: categoryId || undefined }),
+    () => transactionService.list({ month, type, categoryId: categoryId || undefined }),
     [month, type, categoryId],
   );
 
@@ -43,7 +42,7 @@ export function TransactionsPage({ type }: { type: CategoryType }) {
     if (!confirm(`Delete "${t.description}" (${money(t.amount)})?`)) return;
     setActionError(null);
     try {
-      await transactionApi.remove(t.id);
+      await transactionService.remove(t.id);
       await list.reload();
     } catch (err) {
       setActionError(errorMessage(err));
@@ -201,8 +200,8 @@ function TransactionModal(props: {
     setBusy(true);
     setError(null);
     try {
-      if (initial) await transactionApi.update(initial.id, body);
-      else await transactionApi.create(body);
+      if (initial) await transactionService.update(initial.id, body);
+      else await transactionService.create(body);
       if (addAnother && !initial) {
         setForm((f) => ({ ...f, description: '', amount: '', note: '' }));
       } else {

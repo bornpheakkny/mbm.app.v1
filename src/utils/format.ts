@@ -47,3 +47,15 @@ export function defaultDateFor(month: string): string {
   const t = today();
   return t.startsWith(month) ? t : `${month}-01`;
 }
+
+/** "18 Nov 2026, 19:44" — or "Never" */
+export function formatDateTime(iso: string | null): string {
+  if (!iso) return 'Never';
+  return new Date(iso).toLocaleString(undefined, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}

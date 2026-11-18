@@ -1,10 +1,9 @@
 import axios, { AxiosError } from 'axios';
-
-export const TOKEN_KEY = 'mbm_token';
+import { API_TIMEOUT_MS, API_URL, TOKEN_KEY } from '@/constants';
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:4000/api',
-  timeout: 30_000, // Render free tier can take a while to wake up
+  baseURL: API_URL,
+  timeout: API_TIMEOUT_MS,
 });
 
 api.interceptors.request.use((config) => {

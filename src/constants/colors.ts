@@ -1,4 +1,4 @@
-/** Named category colors (same names the API stores) → [background, text] */
+/** Named category colors (same names the API stores) → background, text and solid swatch */
 export const CATEGORY_COLORS: Record<string, { bg: string; fg: string; solid: string }> = {
   gray: { bg: '#f1f5f9', fg: '#475569', solid: '#94a3b8' },
   red: { bg: '#fee2e2', fg: '#b91c1c', solid: '#ef4444' },
@@ -12,5 +12,3 @@ export const CATEGORY_COLORS: Record<string, { bg: string; fg: string; solid: st
 };
 
 export const COLOR_NAMES = Object.keys(CATEGORY_COLORS);
-
-export const colorOf = (name: string) => CATEGORY_COLORS[name] ?? CATEGORY_COLORS.gray;

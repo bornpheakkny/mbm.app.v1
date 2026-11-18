@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { errorMessage } from '@/api/client';
+import { errorMessage } from '@/services';
 
 interface State<T> {
   data: T | null;

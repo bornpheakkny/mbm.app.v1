@@ -1,5 +1,5 @@
 import { useMonth } from '@/context/MonthContext';
-import { currentMonth, formatMonthLabel, shiftMonth } from '@/lib/format';
+import { currentMonth, formatMonthLabel, shiftMonth } from '@/utils/format';
 
 export function MonthPicker() {
   const { month, setMonth } = useMonth();

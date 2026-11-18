@@ -1,13 +1,13 @@
 import { useState, type FormEvent } from 'react';
-import { errorMessage } from '@/api/client';
-import { categoryApi } from '@/api/endpoints';
-import type { Category, CategoryType } from '@/api/types';
+import { categoryService, errorMessage } from '@/services';
+import type { Category, CategoryType } from '@/types';
 import { useAsync } from '@/hooks/useAsync';
-import { COLOR_NAMES, colorOf } from '@/lib/colors';
+import { COLOR_NAMES } from '@/constants';
+import { colorOf } from '@/utils/colors';
 import { Alert, CategoryBadge } from '@/components/ui';
 
 export function CategoriesPage() {
-  const list = useAsync(() => categoryApi.list({ includeArchived: true }), []);
+  const list = useAsync(() => categoryService.list({ includeArchived: true }), []);
   const [error, setError] = useState<string | null>(null);
 
   async function run(fn: () => Promise<unknown>) {
@@ -92,7 +92,7 @@ function CategoryItem({
           </button>
           <button
             className="btn btn--primary btn--sm"
-            onClick={() => run(() => categoryApi.update(c.id, { name, color })).then(() => setEdit(false))}
+            onClick={() => run(() => categoryService.update(c.id, { name, color })).then(() => setEdit(false))}
           >
             Save
           </button>
@@ -111,14 +111,14 @@ function CategoryItem({
         </button>
         <button
           className="btn btn--ghost btn--sm"
-          onClick={() => run(() => categoryApi.update(c.id, { archived: !c.archived }))}
+          onClick={() => run(() => categoryService.update(c.id, { archived: !c.archived }))}
         >
           {c.archived ? 'Restore' : 'Archive'}
         </button>
         <button
           className="icon-btn icon-btn--danger"
           aria-label="Delete"
-          onClick={() => confirm(`Delete "${c.name}"?`) && run(() => categoryApi.remove(c.id))}
+          onClick={() => confirm(`Delete "${c.name}"?`) && run(() => categoryService.remove(c.id))}
         >
           🗑
         </button>
@@ -134,7 +134,7 @@ function AddCategory({ type, run }: { type: CategoryType; run: (fn: () => Promis
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
-    void run(() => categoryApi.create({ name: name.trim(), type, color })).then(() => setName(''));
+    void run(() => categoryService.create({ name: name.trim(), type, color })).then(() => setName(''));
   }
 
   return (

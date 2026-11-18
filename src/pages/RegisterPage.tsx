@@ -1,79 +1,10 @@
 import { useState, type FormEvent } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { errorMessage } from '@/api/client';
-import { useAuth } from '@/context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 import { Alert } from '@/components/ui';
-
-function AuthShell({ title, subtitle, children }: { title: string; subtitle: string; children: React.ReactNode }) {
-  return (
-    <div className="auth">
-      <div className="auth__card">
-        <div className="brand brand--center">
-          <img src="/favicon.svg" alt="" width={36} height={36} />
-          <span>Budget Manager</span>
-        </div>
-        <h1>{title}</h1>
-        <p className="muted">{subtitle}</p>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-export function LoginPage() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    setBusy(true);
-    setError(null);
-    try {
-      await login(email, password);
-      const from = (location.state as { from?: string } | null)?.from ?? '/';
-      navigate(from, { replace: true });
-    } catch (err) {
-      setError(errorMessage(err));
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  return (
-    <AuthShell title="Welcome back" subtitle="Log in to manage your monthly budget.">
-      <form className="form" onSubmit={onSubmit}>
-        {error && <Alert>{error}</Alert>}
-        <label className="field">
-          <span>Email</span>
-          <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <label className="field">
-          <span>Password</span>
-          <input
-            type="password"
-            autoComplete="current-password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <button className="btn btn--primary btn--block" disabled={busy}>
-          {busy ? 'Logging in…' : 'Log in'}
-        </button>
-      </form>
-      <p className="auth__switch">
-        No account yet? <Link to="/register">Create one</Link>
-      </p>
-    </AuthShell>
-  );
-}
-
-const CURRENCIES = ['USD', 'KHR', 'EUR', 'THB', 'VND', 'SGD', 'GBP', 'JPY'];
+import { CURRENCIES } from '@/constants';
+import { useAuth } from '@/context/AuthContext';
+import { AuthLayout } from '@/layouts/AuthLayout';
+import { errorMessage } from '@/services';
 
 export function RegisterPage() {
   const { register } = useAuth();
@@ -101,7 +32,7 @@ export function RegisterPage() {
   }
 
   return (
-    <AuthShell title="Create your account" subtitle="Default income and expense categories are set up for you.">
+    <AuthLayout title="Create your account" subtitle="Default income and expense categories are set up for you.">
       <form className="form" onSubmit={onSubmit}>
         {error && <Alert>{error}</Alert>}
         <label className="field">
@@ -150,6 +81,6 @@ export function RegisterPage() {
       <p className="auth__switch">
         Already have an account? <Link to="/login">Log in</Link>
       </p>
-    </AuthShell>
+    </AuthLayout>
   );
 }

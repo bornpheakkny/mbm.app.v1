@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { errorMessage } from '@/api/client';
-import { budgetApi, categoryApi } from '@/api/endpoints';
-import type { Category } from '@/api/types';
+import { budgetService, categoryService, errorMessage } from '@/services';
+import type { Category } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { useMonth } from '@/context/MonthContext';
 import { useAsync } from '@/hooks/useAsync';
-import { formatMoney, formatMonthLabel, shiftMonth } from '@/lib/format';
+import { formatMoney, formatMonthLabel, shiftMonth } from '@/utils/format';
 import { Alert, CategoryBadge } from '@/components/ui';
 
 export function BudgetPage() {
@@ -14,7 +13,7 @@ export function BudgetPage() {
   const money = (v: number) => formatMoney(v, user?.currency ?? 'USD');
 
   const data = useAsync(async () => {
-    const [categories, budgets] = await Promise.all([categoryApi.list(), budgetApi.get(month)]);
+    const [categories, budgets] = await Promise.all([categoryService.list(), budgetService.get(month)]);
     return { categories, budgets };
   }, [month]);
 
@@ -52,7 +51,7 @@ export function BudgetPage() {
       const items = Object.entries(values)
         .filter(([id, v]) => v !== '' || saved[id] !== '')
         .map(([categoryId, v]) => ({ categoryId, amount: Number(v) || 0 }));
-      await budgetApi.save(month, items);
+      await budgetService.save(month, items);
       await data.reload();
       setStatus({ tone: 'success', msg: `Budget for ${formatMonthLabel(month)} saved.` });
     } catch (err) {
@@ -69,7 +68,7 @@ export function BudgetPage() {
     setBusy(true);
     setStatus(null);
     try {
-      await budgetApi.copy(month, prev, true);
+      await budgetService.copy(month, prev, true);
       await data.reload();
       setStatus({ tone: 'success', msg: `Copied budget from ${formatMonthLabel(prev)}.` });
     } catch (err) {

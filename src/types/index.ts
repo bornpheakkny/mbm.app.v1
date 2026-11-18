@@ -1,16 +1,69 @@
 export type CategoryType = 'INCOME' | 'EXPENSE';
 
+export type Role = 'USER' | 'ADMIN';
+
 export interface User {
   id: string;
   email: string;
   name: string;
   currency: string;
+  role: Role;
+  active: boolean;
+  lastLoginAt: string | null;
   createdAt: string;
+  emailVerified: boolean;
+  /** null = two-step verification off */
+  mfaMethod: MfaMethod | null;
+}
+
+export type MfaMethod = 'TOTP' | 'EMAIL';
+
+/** Password accepted, but a second step is needed */
+export interface MfaChallenge {
+  mfaRequired: true;
+  method: MfaMethod;
+  mfaToken: string;
+  emailHint: string;
+}
+
+export type LoginResponse = AuthResponse | MfaChallenge;
+
+export interface MfaStatus {
+  method: MfaMethod | null;
+  recoveryCodesLeft: number;
+  emailVerified: boolean;
+}
+
+export interface TotpSetup {
+  secret: string;
+  otpauthUrl: string;
+  qrDataUrl: string;
+}
+
+export interface AdminUser extends User {
+  isRoot: boolean;
+  transactionCount: number;
+  categoryCount: number;
+}
+
+export interface AdminUserList {
+  users: AdminUser[];
+  stats: { total: number; admins: number; disabled: number };
+}
+
+export interface AdminUserInput {
+  name: string;
+  email: string;
+  currency: string;
+  role: Role;
+  password?: string;
 }
 
 export interface AuthResponse {
   token: string;
   user: User;
+  /** Set when a backup code was used to sign in */
+  recoveryCodesLeft?: number;
 }
 
 export interface Category {

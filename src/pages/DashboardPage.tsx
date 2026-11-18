@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { summaryApi } from '@/api/endpoints';
-import type { SummaryRow, SummaryTotals } from '@/api/types';
+import { summaryService } from '@/services';
+import type { SummaryRow, SummaryTotals } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { useMonth } from '@/context/MonthContext';
+import { useTheme } from '@/context/ThemeContext';
+import { CHART_COLORS } from '@/constants';
 import { useAsync } from '@/hooks/useAsync';
-import { formatMoney, formatMonthLabel, formatPercent, formatShortMonth } from '@/lib/format';
+import { formatMoney, formatMonthLabel, formatPercent, formatShortMonth } from '@/utils/format';
 import { Alert, CategoryBadge, StatCard, UsageBar } from '@/components/ui';
 
 export function DashboardPage() {
@@ -14,10 +16,19 @@ export function DashboardPage() {
   const cur = user?.currency ?? 'USD';
   const money = (v: number, sign = false) => formatMoney(v, cur, { sign });
 
-  const summary = useAsync(() => summaryApi.get(month), [month]);
-  const trend = useAsync(() => summaryApi.trend(month, 6), [month]);
+  const summary = useAsync(() => summaryService.get(month), [month]);
+  const trend = useAsync(() => summaryService.trend(month, 6), [month]);
 
   const s = summary.data;
+  const { theme } = useTheme();
+  const c = CHART_COLORS[theme];
+  const tick = { fill: c.axis, fontSize: 11 };
+  const tooltipProps = {
+    contentStyle: { background: c.tooltipBg, border: `1px solid ${c.tooltipBorder}`, borderRadius: 8, color: c.text },
+    labelStyle: { color: c.text },
+    cursor: { fill: c.cursor },
+  };
+  const legendStyle = { color: c.text };
 
   return (
     <div className="page">
@@ -68,13 +79,13 @@ export function DashboardPage() {
           {s && s.expenses.rows.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={s.expenses.rows} margin={{ top: 8, right: 8, left: 0, bottom: 40 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" angle={-35} textAnchor="end" interval={0} fontSize={11} height={60} />
-                <YAxis fontSize={11} tickFormatter={(v: number) => money(v)} width={70} />
-                <Tooltip formatter={(v) => money(Number(v))} />
-                <Legend verticalAlign="top" height={28} />
-                <Bar dataKey="budgeted" name="Budgeted" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="actual" name="Actual" fill="#0f766e" radius={[4, 4, 0, 0]} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={c.grid} />
+                <XAxis dataKey="name" angle={-35} textAnchor="end" interval={0} tick={tick} stroke={c.grid} height={60} />
+                <YAxis tick={tick} stroke={c.grid} tickFormatter={(v: number) => money(v)} width={70} />
+                <Tooltip {...tooltipProps} formatter={(v) => money(Number(v))} />
+                <Legend verticalAlign="top" height={28} wrapperStyle={legendStyle} />
+                <Bar dataKey="budgeted" name="Budgeted" fill={c.budgeted} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="actual" name="Actual" fill={c.actual} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : (
@@ -87,13 +98,13 @@ export function DashboardPage() {
           {trend.data ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={trend.data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="month" tickFormatter={formatShortMonth} fontSize={11} />
-                <YAxis fontSize={11} tickFormatter={(v: number) => money(v)} width={70} />
-                <Tooltip formatter={(v) => money(Number(v))} labelFormatter={(m) => formatMonthLabel(String(m))} />
-                <Legend verticalAlign="top" height={28} />
-                <Bar dataKey="income" name="Income" fill="#22c55e" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="expenses" name="Expenses" fill="#f97316" radius={[4, 4, 0, 0]} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={c.grid} />
+                <XAxis dataKey="month" tickFormatter={formatShortMonth} tick={tick} stroke={c.grid} />
+                <YAxis tick={tick} stroke={c.grid} tickFormatter={(v: number) => money(v)} width={70} />
+                <Tooltip {...tooltipProps} formatter={(v) => money(Number(v))} labelFormatter={(m) => formatMonthLabel(String(m))} />
+                <Legend verticalAlign="top" height={28} wrapperStyle={legendStyle} />
+                <Bar dataKey="income" name="Income" fill={c.income} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="expenses" name="Expenses" fill={c.expenses} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : (

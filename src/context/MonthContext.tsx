@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { currentMonth } from '@/lib/format';
+import { currentMonth } from '@/utils/format';
 
 const KEY = 'mbm_month';
 
