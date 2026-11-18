@@ -1,0 +1,66 @@
+.tx-total {
+  color: var(--text);
+}
+.tx-desc {
+  min-width: 200px;
+}
+.tx-amount--income {
+  color: var(--success);
+}
+.amount-input {
+  font-size: 22px !important;
+  font-weight: 650;
+  height: 52px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Phones: compact two-line rows
+   [description · note      ] [amount ]
+   [category] [date         ] [actions] */
+@media (max-width: 640px) {
+  .tx-table tbody tr {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'desc desc amount'
+      'cat date actions';
+    align-items: center;
+    gap: 6px 10px;
+    padding: 12px 8px 10px 16px;
+  }
+  .tx-table tbody td[data-label]::before {
+    display: none;
+  }
+  .tx-table tbody .tx-desc {
+    grid-area: desc;
+    min-width: 0;
+  }
+  .tx-table tbody .tx-desc .strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tx-table tbody .tx-amount {
+    grid-area: amount;
+    align-self: start;
+    padding-right: 8px !important;
+    text-align: right !important;
+    font-size: 15px;
+  }
+  .tx-table tbody .tx-cat {
+    grid-area: cat;
+  }
+  .tx-table tbody .tx-date {
+    grid-area: date;
+    font-size: 12.5px;
+  }
+  .tx-table tbody .tx-actions {
+    grid-area: actions;
+  }
+  .tx-table tfoot tr {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+  .tx-table tfoot td[data-label]::before {
+    display: none;
+  }
+}

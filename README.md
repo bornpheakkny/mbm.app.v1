@@ -23,23 +23,28 @@ Frontend for the Monthly Budget Management System.
 
 ```
 src/
-  assets/       Images, icons, fonts (logo.svg)
-  components/   Reusable UI: MonthPicker, ui/ (Alert, CategoryBadge, Empty, Modal, StatCard, UsageBar)
-  pages/        Page-level components: Login, Register, Dashboard, Transactions (income + expenses),
-                Budget, Categories, Account, Users (admin)
-  layouts/      AppLayout (sidebar + top bar), AuthLayout (login / register card)
-  hooks/        useAsync (load data, ignore stale responses, reload)
-  context/      AuthContext, MonthContext
-  services/     apiClient (axios, token, errors) + one service per API area (auth, categories,
-                budgets, transactions, summary, admin)
-  utils/        Money / date formatting, category color lookup
-  constants/    API config, currencies, category colors, navigation items
-  routes/       AppRoutes (route table), RouteGuards (Protected, Guest, Admin)
-  styles/       index.css (CSS variables, no UI framework)
-  types/        Shared TypeScript types for API data
-  App.tsx       Root component (router + providers)
-  main.tsx      Entry point
+  assets/         logo.svg
+  components/     One folder per reusable component: Name.tsx + Name.css + index.ts
+                  ActionMenu, Alert, Avatar, CategoryBadge, ChangeEmailModal, ConfirmDialog,
+                  EmptyState, Modal, MonthPicker, PageHeader, RecoveryCodes, StatCard,
+                  ThemeToggle, TwoStepSettings, UsageBar, VerifyEmailBanner
+  pages/          One folder per page (+ its private parts and styles), e.g.
+                  Dashboard/ (DashboardPage, SummaryTable), Transactions/ (TransactionsPage,
+                  TransactionModal), Users/ (UsersPage, UserModal, ResetPasswordModal), Login/ (+ MfaStep)…
+  layouts/        AppLayout/ (Sidebar, Topbar, BottomNav), AuthLayout/
+  hooks/          useAsync, useDebouncedValue
+  context/        Auth, Month, Theme, Confirm (useConfirm() dialog)
+  services/       apiClient + one service per API area
+  utils/          Money / date formatting, category color lookup
+  constants/      API config, currencies, colors, navigation, chart theme
+  routes/         AppRoutes, RouteGuards
+  styles/         tokens.css (light/dark design tokens), base.css, primitives.css (buttons, forms, cards, tables)
+  types/          Shared TypeScript types
+  App.tsx         Root component (providers + router)
+  main.tsx        Entry point
 ```
+
+**Responsive layout:** fixed sidebar ≥1024px · slide-in drawer below that · bottom tab bar, stacked table cards and bottom-sheet dialogs on phones (≤640px). Icons come from [lucide-react](https://lucide.dev).
 
 ## Local development
 

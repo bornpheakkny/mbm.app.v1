@@ -1,0 +1,42 @@
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-weight: 650;
+  color: #fff;
+  user-select: none;
+}
+.avatar--sm {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+.avatar--md {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}
+.avatar--lg {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+}
+.avatar--teal {
+  background: linear-gradient(135deg, #14b8a6, #0d9488);
+}
+.avatar--blue {
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+}
+.avatar--violet {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+}
+.avatar--orange {
+  background: linear-gradient(135deg, #fb923c, #ea580c);
+}
+.avatar--pink {
+  background: linear-gradient(135deg, #f472b6, #db2777);
+}
+.avatar--green {
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+}

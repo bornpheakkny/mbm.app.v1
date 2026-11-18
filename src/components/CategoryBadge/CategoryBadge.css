@@ -1,0 +1,27 @@
+.cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  height: 24px;
+  padding: 0 10px 0 8px;
+  border-radius: var(--radius-full);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--c-bg);
+  color: var(--c-fg);
+}
+.cat-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-solid);
+  flex-shrink: 0;
+}
+:root[data-theme='dark'] .cat-badge {
+  background: color-mix(in srgb, var(--c-solid) 18%, transparent);
+  color: color-mix(in srgb, var(--c-solid) 55%, white);
+}

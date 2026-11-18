@@ -1,0 +1,9 @@
+.confirm__message {
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.confirm__message strong {
+  color: var(--text);
+}

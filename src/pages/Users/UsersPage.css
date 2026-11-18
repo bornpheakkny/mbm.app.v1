@@ -1,0 +1,44 @@
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
+}
+.user-cell__text {
+  min-width: 0;
+}
+.user-cell__name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.user-cell__name .pill {
+  height: 18px;
+  font-size: 10.5px;
+  padding: 0 7px;
+}
+.user-cell__email {
+  font-size: 13px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .users-table tbody tr {
+    position: relative;
+  }
+  .users-table .cell--title {
+    padding-right: 72px !important;
+  }
+  .user-cell {
+    min-width: 0;
+  }
+  .users-table__actions {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+  }
+}

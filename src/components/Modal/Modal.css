@@ -1,0 +1,141 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: var(--overlay);
+  backdrop-filter: blur(3px);
+  animation: modal-fade 0.18s ease;
+}
+.modal {
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: modal-pop 0.22s var(--ease);
+}
+.modal--sm {
+  max-width: 420px;
+}
+.modal--md {
+  max-width: 520px;
+}
+.modal--lg {
+  max-width: 680px;
+}
+.modal__handle {
+  display: none;
+}
+.modal__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 20px 0;
+}
+.modal__heading {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4px;
+}
+.modal__heading h2 {
+  font-size: 17px;
+}
+.modal__desc {
+  margin-top: 4px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.modal__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.modal__icon--danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.modal__close {
+  margin: -2px -6px 0 0;
+}
+.modal__body {
+  padding: 18px 20px 20px;
+}
+.modal__foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.modal__foot .check {
+  margin-right: auto;
+}
+
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+@keyframes modal-sheet {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+/* Phones: bottom sheet */
+@media (max-width: 640px) {
+  .modal-backdrop {
+    place-items: end stretch;
+    padding: 0;
+  }
+  .modal {
+    max-width: none;
+    max-height: 92vh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    padding-bottom: env(safe-area-inset-bottom);
+    animation: modal-sheet 0.28s var(--ease);
+  }
+  .modal__handle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 8px auto 0;
+    border-radius: 99px;
+    background: var(--border-strong);
+  }
+  .modal__head {
+    padding: 12px 16px 0;
+  }
+  .modal__body {
+    padding: 16px;
+  }
+  .modal__foot {
+    flex-wrap: wrap;
+  }
+  .modal__foot .btn {
+    flex: 1 1 auto;
+  }
+  .modal__foot .check {
+    flex-basis: 100%;
+  }
+}

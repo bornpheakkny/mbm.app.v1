@@ -1,0 +1,65 @@
+.month-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.month-picker__group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+}
+.month-picker__label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.month-picker__label:hover {
+  background: var(--surface-3);
+}
+.month-picker__cal {
+  color: var(--primary);
+}
+/* The real month input sits invisibly on top so the native picker opens on click */
+.month-picker__label input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.month-picker__label input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+@media (max-width: 480px) {
+  .month-picker__cal {
+    display: none;
+  }
+  .month-picker__label {
+    padding: 0 6px;
+    font-size: 13.5px;
+  }
+  .month-picker__today {
+    padding: 0 8px;
+  }
+}

@@ -1,16 +1,16 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppLayout } from '@/layouts/AppLayout';
-import { AccountPage } from '@/pages/AccountPage';
-import { BudgetPage } from '@/pages/BudgetPage';
-import { CategoriesPage } from '@/pages/CategoriesPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
-import { LoginPage } from '@/pages/LoginPage';
-import { RegisterPage } from '@/pages/RegisterPage';
-import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
-import { TransactionsPage } from '@/pages/TransactionsPage';
-import { UsersPage } from '@/pages/UsersPage';
-import { VerifyEmailPage } from '@/pages/VerifyEmailPage';
+import { AccountPage } from '@/pages/Account';
+import { BudgetPage } from '@/pages/Budget';
+import { CategoriesPage } from '@/pages/Categories';
+import { DashboardPage } from '@/pages/Dashboard';
+import { ForgotPasswordPage } from '@/pages/ForgotPassword';
+import { LoginPage } from '@/pages/Login';
+import { RegisterPage } from '@/pages/Register';
+import { ResetPasswordPage } from '@/pages/ResetPassword';
+import { TransactionsPage } from '@/pages/Transactions';
+import { UsersPage } from '@/pages/Users';
+import { VerifyEmailPage } from '@/pages/VerifyEmail';
 import { AdminRoute, GuestRoute, ProtectedRoute } from './RouteGuards';
 
 export function AppRoutes() {
