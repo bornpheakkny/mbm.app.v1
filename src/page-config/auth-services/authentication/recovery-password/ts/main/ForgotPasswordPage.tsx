@@ -5,12 +5,14 @@ import { Alert } from '@component/modals/alert-banner/ts/Alert';
 import { useAuth } from '@context/auth-provider/ts/AuthContext';
 import { AuthFooter, AuthLayout, AuthLinks } from '@layout/outlet/auth-outlet/ts/AuthLayout';
 import { authService, errorMessage } from '@api/ApiService';
+import { useServerConfig } from '@util/util-hook/use-server-config/ts/useServerConfig';
 
 /**
  * 1. Username, email or phone → a 6-digit code is sent to the account's email or phone
  * 2. Code + new password → password changed, every device signed out
  */
 export function ForgotPasswordPage() {
+  const { sms } = useServerConfig();
   const { logout } = useAuth();
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState('');
@@ -116,7 +118,7 @@ export function ForgotPasswordPage() {
   }
 
   return (
-    <AuthLayout title="Forgot your password?" subtitle="Enter your username, email or phone. We'll send a 6-digit code to the email or phone on the account.">
+    <AuthLayout title="Forgot your password?" subtitle={`Enter your username, email or phone. We'll send a 6-digit code to the ${sms ? 'email or phone' : 'email'} on the account.`}>
       <form className="pheakkornyMbmForm" onSubmit={requestCode}>
         {error && <Alert>{error}</Alert>}
         <label className="pheakkornyMbmField">

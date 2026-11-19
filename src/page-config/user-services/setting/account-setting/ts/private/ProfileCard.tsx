@@ -8,12 +8,14 @@ import { authService, errorMessage } from '@api/ApiService';
 import { Select } from '@component/input/select-field/ts/Select';
 import { useConfirm } from '@context/confirm-provider/ts/ConfirmContext';
 import { PhoneModal } from '@page/user-services/setting/account-setting/ts/private/PhoneModal';
+import { useServerConfig } from '@util/util-hook/use-server-config/ts/useServerConfig';
 
 export function ProfileCard() {
   const { user, setUser } = useAuth();
   const confirm = useConfirm();
   const [name, setName] = useState(user?.name ?? '');
   const [username, setUsername] = useState(user?.username ?? '');
+  const { sms } = useServerConfig(); // adding/changing a phone needs a text message
   const [editingPhone, setEditingPhone] = useState(false);
   const [currency, setCurrency] = useState(user?.currency ?? 'USD');
   const [msg, setMsg] = useState<{ tone: 'error' | 'success'; text: string } | null>(null);
@@ -116,17 +118,19 @@ export function ProfileCard() {
             {user?.phone && <span className="pheakkornyMbmPill pheakkornyMbmPillSuccess">Verified</span>}
           </span>
           <div className="pheakkornyMbmInputWithAction">
-            <input value={user?.phone ?? ''} placeholder="No phone yet" disabled aria-label="Phone" />
-            <button type="button" className="pheakkornyMbmBtn pheakkornyMbmBtnSecondary" onClick={() => setEditingPhone(true)}>
-              {user?.phone ? 'Change' : 'Add'}
-            </button>
+            <input value={user?.phone ?? ''} placeholder={sms ? 'No phone yet' : 'Not available yet'} disabled aria-label="Phone" />
+            {sms && (
+              <button type="button" className="pheakkornyMbmBtn pheakkornyMbmBtnSecondary" onClick={() => setEditingPhone(true)}>
+                {user?.phone ? 'Change' : 'Add'}
+              </button>
+            )}
             {canRemovePhone && (
               <button type="button" className="pheakkornyMbmBtn pheakkornyMbmBtnGhost" onClick={removePhone}>
                 Remove
               </button>
             )}
           </div>
-          {user?.pendingPhone && (
+          {sms && user?.pendingPhone && (
             <span className="pheakkornyMbmFieldHint">
               Waiting for the code sent to <strong>{user.pendingPhone}</strong>.{' '}
               <button type="button" className="pheakkornyMbmLink" onClick={() => setEditingPhone(true)}>

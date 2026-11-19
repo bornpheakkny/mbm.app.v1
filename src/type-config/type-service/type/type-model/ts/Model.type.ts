@@ -174,3 +174,9 @@ export interface TrendPoint {
   income: number;
   expenses: number;
 }
+
+/** GET /api/config — public server settings */
+export interface ServerConfig {
+  /** Text messages can be sent (phone sign-up, recovery and adding a phone are offered) */
+  sms: boolean;
+}

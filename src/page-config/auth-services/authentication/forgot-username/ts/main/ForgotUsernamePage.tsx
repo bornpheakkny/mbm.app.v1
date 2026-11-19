@@ -4,9 +4,11 @@ import { AtSign } from 'lucide-react';
 import { Alert } from '@component/modals/alert-banner/ts/Alert';
 import { AuthFooter, AuthLayout } from '@layout/outlet/auth-outlet/ts/AuthLayout';
 import { authService, errorMessage } from '@api/ApiService';
+import { useServerConfig } from '@util/util-hook/use-server-config/ts/useServerConfig';
 
 /** Sends the username to the email or phone on the account */
 export function ForgotUsernamePage() {
+  const { sms } = useServerConfig();
   const [contact, setContact] = useState('');
   const [sent, setSent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +28,7 @@ export function ForgotUsernamePage() {
   }
 
   return (
-    <AuthLayout title="Forgot your username?" subtitle="Enter the email or phone number on your account and we'll send your username there.">
+    <AuthLayout title="Forgot your username?" subtitle={`Enter the ${sms ? 'email or phone number' : 'email'} on your account and we'll send your username there.`}>
       {sent ? (
         <div className="pheakkornyMbmForm">
           <Alert tone="success">{sent}</Alert>
@@ -34,14 +36,14 @@ export function ForgotUsernamePage() {
             Back to log in
           </Link>
           <button type="button" className="pheakkornyMbmBtn pheakkornyMbmBtnSecondary pheakkornyMbmBtnBlock" onClick={() => setSent(null)}>
-            Try a different email or phone
+            Try a different {sms ? 'email or phone' : 'email'}
           </button>
         </div>
       ) : (
         <form className="pheakkornyMbmForm" onSubmit={onSubmit}>
           {error && <Alert>{error}</Alert>}
           <label className="pheakkornyMbmField">
-            <span>Email or phone number</span>
+            <span>{sms ? 'Email or phone number' : 'Email'}</span>
             <span className="pheakkornyMbmInputIcon">
               <AtSign size={16} />
               <input
@@ -49,7 +51,7 @@ export function ForgotUsernamePage() {
                 autoFocus
                 autoComplete="email"
                 autoCapitalize="none"
-                placeholder="you@example.com or 012 345 678"
+                placeholder={sms ? 'you@example.com or 012 345 678' : 'you@example.com'}
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
               />

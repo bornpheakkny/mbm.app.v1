@@ -6,3 +6,4 @@ export { transactionService } from '@api/api-request/transaction-request/ts/Tran
 export { summaryService } from '@api/api-request/summary-request/ts/SummaryService';
 export { adminService } from '@api/api-request/admin-request/ts/AdminService';
 export { mfaService } from '@api/api-request/mfa-request/ts/MfaService';
+export { configService } from '@api/api-request/config-request/ts/ConfigService';

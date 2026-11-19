@@ -10,6 +10,7 @@ import { useAuth } from '@context/auth-provider/ts/AuthContext';
 import { AuthFooter, AuthLayout } from '@layout/outlet/auth-outlet/ts/AuthLayout';
 import { errorMessage } from '@api/ApiService';
 import type { Channel, VerificationChallenge } from '@type/type-model/ts/Model.type';
+import { useServerConfig } from '@util/util-hook/use-server-config/ts/useServerConfig';
 
 const USERNAME_HINT = '3–30 characters: letters, numbers, . or _ (starts with a letter)';
 
@@ -20,7 +21,10 @@ const USERNAME_HINT = '3–30 characters: letters, numbers, . or _ (starts with 
 export function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
-  const [via, setVia] = useState<Channel>('email');
+  const { sms } = useServerConfig();
+  const [choice, setVia] = useState<Channel>('email');
+  // Phone sign-up is only offered when the server can send text messages
+  const via: Channel = sms ? choice : 'email';
   const [form, setForm] = useState({ name: '', username: '', email: '', phone: '', password: '', confirm: '', currency: 'USD' });
   const [challenge, setChallenge] = useState<VerificationChallenge | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -89,19 +93,21 @@ export function RegisterPage() {
           <span className="pheakkornyMbmFieldHint">{USERNAME_HINT}. You'll use it to log in.</span>
         </label>
 
-        <div className="pheakkornyMbmField">
-          <span className="pheakkornyMbmFieldLabel">Verify with</span>
-          <SegmentedControl
-            aria-label="Verify with"
-            block
-            value={via}
-            onChange={setVia}
-            options={[
-              { value: 'email', label: 'Email', icon: Mail },
-              { value: 'sms', label: 'Phone (SMS)', icon: Phone },
-            ]}
-          />
-        </div>
+        {sms && (
+          <div className="pheakkornyMbmField">
+            <span className="pheakkornyMbmFieldLabel">Verify with</span>
+            <SegmentedControl
+              aria-label="Verify with"
+              block
+              value={via}
+              onChange={setVia}
+              options={[
+                { value: 'email', label: 'Email', icon: Mail },
+                { value: 'sms', label: 'Phone (SMS)', icon: Phone },
+              ]}
+            />
+          </div>
+        )}
         {via === 'email' ? (
           <label className="pheakkornyMbmField">
             <span>Email</span>
