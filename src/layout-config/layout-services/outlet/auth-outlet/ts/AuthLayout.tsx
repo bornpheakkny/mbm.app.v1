@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { CalendarCheck, PieChart, ShieldCheck } from 'lucide-react';
-import logo from '../../../../../../asset-root/asset-config/asset-services/asset-inventory/image/logo.svg';
+import logo from '@asset/image/logo.svg';
 import { ThemeToggle } from '@component/button/theme-toggle/ts/ThemeToggle';
 import { APP_NAME } from '@util/util-constant/UtilConstant';
 import styles from '../css/AuthLayout.module.css';

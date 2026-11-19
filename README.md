@@ -23,22 +23,22 @@ Frontend for the Monthly Budget Management System.
 
 ```
 src/
-  index.tsx / index.css / App.tsx        Entry, global style imports, root component (providers + router)
-  api-root/api-config/api-service/       @api      api-configuration/api-client (axios) + api-request/<area>-request
-  asset-root/.../asset-inventory/        @asset    image/logo.svg
-  component-root/.../component-service/  @component <group>/<name>/{css,ts}
-                                         groups: button, card, confirmation, fallback, header, info, input, modals
-                                         (bigger ones split ts/main + ts/private, e.g. card/two-step-settings)
-  context-root/.../context-provider/     @context  auth-, confirm-, month-, theme-provider
-  layout-root/.../layout-services/       @layout   left-sidebar, header, outlet (app + auth), footer (bottom nav)
-  page-root/page-config/                 @page     auth-services/authentication/<page>
-                                                   user-services/<feature>/<page>
-                                                   root-services/user/<page>     (root admin only)
-                                         each page: css/main, ts/main (the page), ts/private (its parts)
-  route-root/.../route-services/         @route    route-configuration (routes), route-protect (guards)
-  style-root/.../style-service/                    global-token, global-base, global-primitive
-  type/.../type-service/type/            @type     type-model (shared types), type-global (vite-env.d.ts)
-  utils/util-config/util-service/        @util     util-constant, util-consumption (cx, variant, format, colors), util-hook
+  index.tsx / index.css / App.tsx  Entry, global style imports, root component (providers + router)
+  api-config/        @api        api-service/api-configuration/api-client (axios) + api-request/<area>-request
+  asset-config/      @asset      asset-services/asset-inventory/image/logo.svg
+  component-config/  @component  component-service/<group>/<name>/{css,ts}
+                                 groups: button, card, confirmation, fallback, header, info, input, modals
+                                 (bigger ones split ts/main + ts/private, e.g. card/two-step-settings)
+  context-config/    @context    context-services/context-provider/{auth,confirm,month,theme}-provider
+  layout-config/     @layout     layout-services/{left-sidebar, header, outlet (app + auth), footer (bottom nav)}
+  page-config/       @page       auth-services/authentication/<page>
+                                 user-services/<feature>/<page>
+                                 root-services/user/<page>   (root admin only)
+                                 each page: css/main, ts/main (the page), ts/private (its parts)
+  route-config/      @route      route-services/{route-configuration (routes), route-protect (guards)}
+  style-config/                  style-service/{global-token, global-base, global-primitive}
+  type-config/       @type       type-service/type/{type-model (shared types), type-global (vite-env.d.ts)}
+  util-config/       @util       util-service/{util-constant, util-consumption (cx, variant, format, colors), util-hook}
 ```
 
 Folders are `kebab-case`, files `PascalCase` (hooks `useX`). Each root has a path alias (see `tsconfig.app.json` / `vite.config.ts`), so imports look like `@component/input/select-field/ts/Select`.
@@ -47,9 +47,9 @@ Folders are `kebab-case`, files `PascalCase` (hooks `useX`). Each root has a pat
 
 | Where | Example | File |
 |---|---|---|
-| Global primitives | `pheakkornyMbmBtn`, `pheakkornyMbmBtnPrimary`, `pheakkornyMbmCard`, `pheakkornyMbmCardHead` | `style-root/.../global-primitive/css/Primitives.css` |
-| Component module | `pheakkornyMbmSelectTrigger`, `pheakkornyMbmModalFoot` | `component-root/.../select-field/css/Select.module.css` |
-| Page module | `pheakkornyMbmBudgetPageSaveBar` | `page-root/.../budget-plan/css/main/BudgetPage.module.css` |
+| Global primitives | `pheakkornyMbmBtn`, `pheakkornyMbmBtnPrimary`, `pheakkornyMbmCard`, `pheakkornyMbmCardHead` | `style-config/.../global-primitive/css/Primitives.css` |
+| Component module | `pheakkornyMbmSelectTrigger`, `pheakkornyMbmModalFoot` | `component-config/.../select-field/css/Select.module.css` |
+| Page module | `pheakkornyMbmBudgetPageSaveBar` | `page-config/.../budget-plan/css/main/BudgetPage.module.css` |
 
 CSS Modules keep these names as written (`generateScopedName: '[local]'`), with no hash. In TSX use `styles.pheakkornyMbmSelectTrigger`, global classes as plain strings, `cx()` to combine, and `variant(styles, 'pheakkornyMbmAlert', tone)` to pick a class by prop value (`tone='error'` → `pheakkornyMbmAlertError`).
 

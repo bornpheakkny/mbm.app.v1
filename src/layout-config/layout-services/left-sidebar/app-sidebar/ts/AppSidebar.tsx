@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LogOut, X } from 'lucide-react';
-import logo from '../../../../../../asset-root/asset-config/asset-services/asset-inventory/image/logo.svg';
+import logo from '@asset/image/logo.svg';
 import { Avatar } from '@component/info/avatar/ts/Avatar';
 import { APP_NAME, NAV_SECTIONS } from '@util/util-constant/UtilConstant';
 import { useAuth } from '@context/auth-provider/ts/AuthContext';
