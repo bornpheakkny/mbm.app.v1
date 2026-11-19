@@ -1,0 +1,42 @@
+.pheakkornyMbmAvatar {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-weight: 650;
+  color: #fff;
+  user-select: none;
+}
+.pheakkornyMbmAvatarSm {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+.pheakkornyMbmAvatarMd {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}
+.pheakkornyMbmAvatarLg {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+}
+.pheakkornyMbmAvatarTeal {
+  background: linear-gradient(135deg, #14b8a6, #0d9488);
+}
+.pheakkornyMbmAvatarBlue {
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+}
+.pheakkornyMbmAvatarViolet {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+}
+.pheakkornyMbmAvatarOrange {
+  background: linear-gradient(135deg, #fb923c, #ea580c);
+}
+.pheakkornyMbmAvatarPink {
+  background: linear-gradient(135deg, #f472b6, #db2777);
+}
+.pheakkornyMbmAvatarGreen {
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+}

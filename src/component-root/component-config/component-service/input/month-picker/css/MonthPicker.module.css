@@ -1,0 +1,65 @@
+.pheakkornyMbmMonthPicker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.pheakkornyMbmMonthPickerGroup {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+}
+.pheakkornyMbmMonthPickerLabel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.pheakkornyMbmMonthPickerLabel:hover {
+  background: var(--surface-3);
+}
+.pheakkornyMbmMonthPickerCal {
+  color: var(--primary);
+}
+/* The real month input sits invisibly on top so the native picker opens on click */
+.pheakkornyMbmMonthPickerLabel input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.pheakkornyMbmMonthPickerLabel input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+@media (max-width: 480px) {
+  .pheakkornyMbmMonthPickerCal {
+    display: none;
+  }
+  .pheakkornyMbmMonthPickerLabel {
+    padding: 0 6px;
+    font-size: 13.5px;
+  }
+  .pheakkornyMbmMonthPickerToday {
+    padding: 0 8px;
+  }
+}

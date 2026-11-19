@@ -23,30 +23,37 @@ Frontend for the Monthly Budget Management System.
 
 ```
 src/
-  assets/         logo.svg
-  components/     One folder per reusable component: Name.tsx + Name.module.css + index.ts
-                  ActionMenu, Alert, Avatar, CategoryBadge, ChangeEmailModal, ConfirmDialog,
-                  EmptyState, Modal, MonthPicker, PageHeader, RecoveryCodes, StatCard,
-                  Select, ThemeToggle, TwoStepSettings, UsageBar, VerifyEmailBanner
-  pages/          One folder per page (+ its private parts and styles), e.g.
-                  Dashboard/ (DashboardPage, SummaryTable), Transactions/ (TransactionsPage,
-                  TransactionModal), Users/ (UsersPage, UserModal, ResetPasswordModal), Login/ (+ MfaStep)…
-  layouts/        AppLayout/ (Sidebar, Topbar, BottomNav), AuthLayout/
-  hooks/          useAsync, useDebouncedValue
-  context/        Auth, Month, Theme, Confirm (useConfirm() dialog)
-  services/       apiClient + one service per API area
-  utils/          Money / date formatting, category color lookup
-  constants/      API config, currencies, colors, navigation, chart theme
-  routes/         AppRoutes, RouteGuards
-  styles/         tokens.css (light/dark design tokens), base.css, primitives.css (buttons, forms, cards, tables)
-  types/          Shared TypeScript types
-  App.tsx         Root component (providers + router)
-  main.tsx        Entry point
+  index.tsx / index.css / App.tsx        Entry, global style imports, root component (providers + router)
+  api-root/api-config/api-service/       @api      api-configuration/api-client (axios) + api-request/<area>-request
+  asset-root/.../asset-inventory/        @asset    image/logo.svg
+  component-root/.../component-service/  @component <group>/<name>/{css,ts}
+                                         groups: button, card, confirmation, fallback, header, info, input, modals
+                                         (bigger ones split ts/main + ts/private, e.g. card/two-step-settings)
+  context-root/.../context-provider/     @context  auth-, confirm-, month-, theme-provider
+  layout-root/.../layout-services/       @layout   left-sidebar, header, outlet (app + auth), footer (bottom nav)
+  page-root/page-config/                 @page     auth-services/authentication/<page>
+                                                   user-services/<feature>/<page>
+                                                   root-services/user/<page>     (root admin only)
+                                         each page: css/main, ts/main (the page), ts/private (its parts)
+  route-root/.../route-services/         @route    route-configuration (routes), route-protect (guards)
+  style-root/.../style-service/                    global-token, global-base, global-primitive
+  type/.../type-service/type/            @type     type-model (shared types), type-global (vite-env.d.ts)
+  utils/util-config/util-service/        @util     util-constant, util-consumption (cx, variant, format, colors), util-hook
 ```
 
-**Styling:** components, pages and layouts use **CSS Modules** (`Name.module.css`, imported as `styles` and used as `styles.someClass`; write module class names in camelCase). Shared primitives (`.btn`, `.card`, `.field`, `.table`, `.pill`…) and design tokens are global in `src/styles/`. Combine classes with `cx()` from `utils/cx`.
+Folders are `kebab-case`, files `PascalCase` (hooks `useX`). Each root has a path alias (see `tsconfig.app.json` / `vite.config.ts`), so imports look like `@component/input/select-field/ts/Select`.
 
-**Dropdowns:** use `<Select>` from `@/components/Select` instead of a native `<select>`. Native option lists can't be styled, so `Select` renders its own list (colored dots, icons, descriptions, keyboard support) and a bottom sheet on phones.
+**Class names:** every CSS class starts with **`pheakkornyMbm`**, then the component (file) name, then the part, in camelCase, so any class you see in DevTools tells you which file it lives in:
+
+| Where | Example | File |
+|---|---|---|
+| Global primitives | `pheakkornyMbmBtn`, `pheakkornyMbmBtnPrimary`, `pheakkornyMbmCard`, `pheakkornyMbmCardHead` | `style-root/.../global-primitive/css/Primitives.css` |
+| Component module | `pheakkornyMbmSelectTrigger`, `pheakkornyMbmModalFoot` | `component-root/.../select-field/css/Select.module.css` |
+| Page module | `pheakkornyMbmBudgetPageSaveBar` | `page-root/.../budget-plan/css/main/BudgetPage.module.css` |
+
+CSS Modules keep these names as written (`generateScopedName: '[local]'`), with no hash. In TSX use `styles.pheakkornyMbmSelectTrigger`, global classes as plain strings, `cx()` to combine, and `variant(styles, 'pheakkornyMbmAlert', tone)` to pick a class by prop value (`tone='error'` → `pheakkornyMbmAlertError`).
+
+**Dropdowns:** use `<Select>` from `@component/input/select-field/ts/Select` instead of a native `<select>`. Native option lists can't be styled, so `Select` renders its own list (colored dots, icons, descriptions, keyboard support) and a bottom sheet on phones.
 
 **Responsive layout:** fixed sidebar ≥1024px · slide-in drawer below that · bottom tab bar, stacked table cards and bottom-sheet dialogs on phones (≤640px). Icons come from [lucide-react](https://lucide.dev).
 

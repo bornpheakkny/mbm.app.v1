@@ -1,0 +1,6 @@
+.pheakkornyMbmThemeToggle svg {
+  transition: transform 0.3s var(--ease);
+}
+.pheakkornyMbmThemeToggle:hover svg {
+  transform: rotate(-20deg);
+}

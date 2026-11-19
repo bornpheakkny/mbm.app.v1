@@ -1,6 +1,0 @@
-.toggle svg {
-  transition: transform 0.3s var(--ease);
-}
-.toggle:hover svg {
-  transform: rotate(-20deg);
-}

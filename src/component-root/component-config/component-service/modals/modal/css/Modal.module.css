@@ -1,0 +1,141 @@
+.pheakkornyMbmModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: var(--overlay);
+  backdrop-filter: blur(3px);
+  animation: fade 0.18s ease;
+}
+.pheakkornyMbmModal {
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: pop 0.22s var(--ease);
+}
+.pheakkornyMbmModalSm {
+  max-width: 420px;
+}
+.pheakkornyMbmModalMd {
+  max-width: 520px;
+}
+.pheakkornyMbmModalLg {
+  max-width: 680px;
+}
+.pheakkornyMbmModalHandle {
+  display: none;
+}
+.pheakkornyMbmModalHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 20px 0;
+}
+.pheakkornyMbmModalHeading {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4px;
+}
+.pheakkornyMbmModalTitle {
+  font-size: 17px;
+}
+.pheakkornyMbmModalDesc {
+  margin-top: 4px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.pheakkornyMbmModalIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.pheakkornyMbmModalIconDanger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.pheakkornyMbmModalClose {
+  margin: -2px -6px 0 0;
+}
+.pheakkornyMbmModalBody {
+  padding: 18px 20px 20px;
+}
+.pheakkornyMbmModalFoot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.pheakkornyMbmModalFootStart {
+  margin-right: auto;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+@keyframes sheet {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+/* Phones: bottom sheet */
+@media (max-width: 640px) {
+  .pheakkornyMbmModalBackdrop {
+    place-items: end stretch;
+    padding: 0;
+  }
+  .pheakkornyMbmModal {
+    max-width: none;
+    max-height: 92vh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    padding-bottom: env(safe-area-inset-bottom);
+    animation: sheet 0.28s var(--ease);
+  }
+  .pheakkornyMbmModalHandle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 8px auto 0;
+    border-radius: 99px;
+    background: var(--border-strong);
+  }
+  .pheakkornyMbmModalHead {
+    padding: 12px 16px 0;
+  }
+  .pheakkornyMbmModalBody {
+    padding: 16px;
+  }
+  .pheakkornyMbmModalFoot {
+    flex-wrap: wrap;
+  }
+  .pheakkornyMbmModalFoot > :global(.pheakkornyMbmBtn) {
+    flex: 1 1 auto;
+  }
+  .pheakkornyMbmModalFootStart {
+    flex-basis: 100%;
+  }
+}

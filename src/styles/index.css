@@ -1,4 +1,0 @@
-/* Global styles. Component and page styles live next to their .tsx files. */
-@import './tokens.css';
-@import './base.css';
-@import './primitives.css';

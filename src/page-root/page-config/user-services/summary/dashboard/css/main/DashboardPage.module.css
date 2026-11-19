@@ -1,0 +1,83 @@
+.pheakkornyMbmDashboardPageChartCard {
+  display: flex;
+  flex-direction: column;
+}
+.pheakkornyMbmDashboardPageChartCard :global(.pheakkornyMbmCardTitle) {
+  flex-wrap: wrap;
+}
+.pheakkornyMbmDashboardPageChart {
+  height: 300px;
+  margin: 0 -4px;
+}
+.pheakkornyMbmDashboardPageChartLegend {
+  display: flex;
+  gap: 14px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.pheakkornyMbmDashboardPageChartLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pheakkornyMbmDashboardPageChartLegend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.pheakkornyMbmDashboardPageSummaryIconIncome {
+  background: var(--success-soft);
+  color: var(--success);
+}
+.pheakkornyMbmDashboardPageSummaryIconExpense {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+.pheakkornyMbmDashboardPageSummaryTable td:global(.pheakkornyMbmCellTitle) {
+  min-width: 180px;
+}
+.pheakkornyMbmDashboardPageSummaryUsage {
+  max-width: 180px;
+  height: 4px;
+}
+
+@media (max-width: 640px) {
+  .pheakkornyMbmDashboardPageChart {
+    height: 240px;
+  }
+  .pheakkornyMbmDashboardPageSummaryTable td:global(.pheakkornyMbmCellTitle) {
+    min-width: 0;
+  }
+  .pheakkornyMbmDashboardPageSummaryUsage {
+    max-width: none;
+  }
+  .pheakkornyMbmDashboardPageSummaryTable tfoot td:global(.pheakkornyMbmCellTitle) {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+}
+
+/* Two tables side by side need tighter cells */
+@media (min-width: 641px) {
+  .pheakkornyMbmDashboardPageSummaryTable th,
+  .pheakkornyMbmDashboardPageSummaryTable td {
+    padding: 11px 14px;
+  }
+  .pheakkornyMbmDashboardPageSummaryTable th:first-child,
+  .pheakkornyMbmDashboardPageSummaryTable td:first-child {
+    padding-left: 20px;
+  }
+  .pheakkornyMbmDashboardPageSummaryTable th:last-child,
+  .pheakkornyMbmDashboardPageSummaryTable td:last-child {
+    padding-right: 20px;
+  }
+  .pheakkornyMbmDashboardPageSummaryTable td:global(.pheakkornyMbmCellTitle) {
+    min-width: 150px;
+  }
+  .pheakkornyMbmDashboardPageSummaryUsage {
+    max-width: 150px;
+  }
+}

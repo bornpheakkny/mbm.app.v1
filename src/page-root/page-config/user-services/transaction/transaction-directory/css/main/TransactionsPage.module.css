@@ -1,0 +1,66 @@
+.pheakkornyMbmTransactionsPageTxTotal {
+  color: var(--text);
+}
+.pheakkornyMbmTransactionsPageTxDesc {
+  min-width: 200px;
+}
+.pheakkornyMbmTransactionsPageTxAmountIncome {
+  color: var(--success);
+}
+.pheakkornyMbmTransactionsPageAmountInput {
+  font-size: 22px !important;
+  font-weight: 650;
+  height: 52px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Phones: compact two-line rows
+   [description · note      ] [amount ]
+   [category] [date         ] [actions] */
+@media (max-width: 640px) {
+  .pheakkornyMbmTransactionsPageTxTable tbody tr {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'desc desc amount'
+      'cat date actions';
+    align-items: center;
+    gap: 6px 10px;
+    padding: 12px 8px 10px 16px;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tbody td[data-label]::before {
+    display: none;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tbody .pheakkornyMbmTransactionsPageTxDesc {
+    grid-area: desc;
+    min-width: 0;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tbody .pheakkornyMbmTransactionsPageTxDesc :global(.pheakkornyMbmStrong) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tbody .pheakkornyMbmTransactionsPageTxAmount {
+    grid-area: amount;
+    align-self: start;
+    padding-right: 8px !important;
+    text-align: right !important;
+    font-size: 15px;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tbody .pheakkornyMbmTransactionsPageTxCat {
+    grid-area: cat;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tbody .pheakkornyMbmTransactionsPageTxDate {
+    grid-area: date;
+    font-size: 12.5px;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tbody .pheakkornyMbmTransactionsPageTxActions {
+    grid-area: actions;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tfoot tr {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+  .pheakkornyMbmTransactionsPageTxTable tfoot td[data-label]::before {
+    display: none;
+  }
+}

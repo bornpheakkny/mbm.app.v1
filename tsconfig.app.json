@@ -16,7 +16,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "paths": { "@/*": ["./src/*"] }
+    "paths": {
+      "@api/*": ["./src/api-root/api-config/api-service/*"],
+      "@asset/*": ["./src/asset-root/asset-config/asset-services/asset-inventory/*"],
+      "@component/*": ["./src/component-root/component-config/component-service/*"],
+      "@context/*": ["./src/context-root/context-config/context-services/context-provider/*"],
+      "@layout/*": ["./src/layout-root/layout-config/layout-services/*"],
+      "@page/*": ["./src/page-root/page-config/*"],
+      "@route/*": ["./src/route-root/route-config/route-services/*"],
+      "@type/*": ["./src/type/type-config/type-service/type/*"],
+      "@util/*": ["./src/utils/util-config/util-service/*"],
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }

@@ -1,0 +1,52 @@
+.pheakkornyMbmCategoryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  height: 24px;
+  padding: 0 10px 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pheakkornyMbmCategoryBadgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-solid);
+  flex-shrink: 0;
+}
+
+/* Soft: tinted background (default) */
+.pheakkornyMbmCategoryBadgeSoft {
+  background: var(--c-bg);
+  color: var(--c-fg);
+}
+:global(:root[data-theme='dark']) .pheakkornyMbmCategoryBadgeSoft {
+  background: color-mix(in srgb, var(--c-solid) 18%, transparent);
+  color: color-mix(in srgb, var(--c-solid) 55%, white);
+}
+
+/* Solid: filled with the category color */
+.pheakkornyMbmCategoryBadgeSolid {
+  background: var(--c-solid);
+  color: var(--c-on);
+}
+.pheakkornyMbmCategoryBadgeSolid .pheakkornyMbmCategoryBadgeDot {
+  background: var(--c-on);
+  opacity: 0.75;
+}
+
+/* Outline: colored border on the page background */
+.pheakkornyMbmCategoryBadgeOutline {
+  background: transparent;
+  border-color: var(--c-solid);
+  color: var(--c-fg);
+}
+:global(:root[data-theme='dark']) .pheakkornyMbmCategoryBadgeOutline {
+  color: color-mix(in srgb, var(--c-solid) 55%, white);
+}

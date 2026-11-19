@@ -1,0 +1,50 @@
+.pheakkornyMbmActionMenu {
+  position: fixed;
+  z-index: 90;
+  width: 220px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  animation: menu-in 0.12s var(--ease);
+}
+.pheakkornyMbmActionMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 38px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-2);
+  font-size: 13.5px;
+  text-align: left;
+}
+.pheakkornyMbmActionMenuItem svg {
+  color: var(--muted);
+}
+.pheakkornyMbmActionMenuItem:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+.pheakkornyMbmActionMenuDanger,
+.pheakkornyMbmActionMenuDanger svg {
+  color: var(--danger);
+}
+.pheakkornyMbmActionMenuDanger:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.pheakkornyMbmActionMenuTriggerOpen {
+  background: var(--surface-3);
+  color: var(--text);
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

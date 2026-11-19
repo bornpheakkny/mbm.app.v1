@@ -1,0 +1,44 @@
+.pheakkornyMbmUsersPageUserCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
+}
+.pheakkornyMbmUsersPageUserCellText {
+  min-width: 0;
+}
+.pheakkornyMbmUsersPageUserCellName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.pheakkornyMbmUsersPageUserCellName :global(.pheakkornyMbmPill) {
+  height: 18px;
+  font-size: 10.5px;
+  padding: 0 7px;
+}
+.pheakkornyMbmUsersPageUserCellEmail {
+  font-size: 13px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .pheakkornyMbmUsersPageUsersTable tbody tr {
+    position: relative;
+  }
+  .pheakkornyMbmUsersPageUsersTable :global(.pheakkornyMbmCellTitle) {
+    padding-right: 72px !important;
+  }
+  .pheakkornyMbmUsersPageUserCell {
+    min-width: 0;
+  }
+  .pheakkornyMbmUsersPageUsersTableActions {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+  }
+}

@@ -1,0 +1,46 @@
+.pheakkornyMbmPageHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.pheakkornyMbmPageHeaderText {
+  min-width: 0;
+  flex: 1 1 320px;
+}
+.pheakkornyMbmPageHeaderEyebrow {
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.pheakkornyMbmPageHeaderDesc {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.pheakkornyMbmPageHeaderActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .pheakkornyMbmPageHeaderTitle {
+    font-size: 21px;
+  }
+  .pheakkornyMbmPageHeader {
+    gap: 12px;
+  }
+  .pheakkornyMbmPageHeaderText {
+    flex-basis: 100%;
+  }
+  .pheakkornyMbmPageHeaderActions {
+    width: 100%;
+  }
+  .pheakkornyMbmPageHeaderActions > * {
+    flex: 1 1 0;
+  }
+}

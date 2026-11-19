@@ -1,0 +1,130 @@
+.pheakkornyMbmCategoriesPageCatIconIncome {
+  background: var(--success-soft);
+  color: var(--success);
+}
+.pheakkornyMbmCategoriesPageCatIconExpense {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.pheakkornyMbmCategoriesPageCatList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pheakkornyMbmCategoriesPageCatItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 8px 12px 8px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.pheakkornyMbmCategoriesPageCatItem:hover {
+  background: var(--surface-2);
+}
+.pheakkornyMbmCategoriesPageCatItemActions {
+  margin-left: auto;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+.pheakkornyMbmCategoriesPageCatItem:hover .pheakkornyMbmCategoriesPageCatItemActions,
+.pheakkornyMbmCategoriesPageCatItem:focus-within .pheakkornyMbmCategoriesPageCatItemActions {
+  opacity: 1;
+}
+.pheakkornyMbmCategoriesPageArchivedBadge {
+  opacity: 0.5;
+}
+.pheakkornyMbmCategoriesPageCatItemEdit {
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--surface-2);
+}
+.pheakkornyMbmCategoriesPageCatItemEdit input {
+  flex: 1 1 200px;
+  height: 38px;
+}
+.pheakkornyMbmCategoriesPageCatItemEdit :global(.pheakkornyMbmRowActions) {
+  margin-left: auto;
+}
+
+.pheakkornyMbmCategoriesPageCatAdd {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px;
+  background: var(--surface-2);
+}
+.pheakkornyMbmCategoriesPageCatAddRow {
+  display: flex;
+  gap: 8px;
+}
+.pheakkornyMbmCategoriesPageCatAddRow input {
+  flex: 1;
+  min-width: 0;
+}
+
+.pheakkornyMbmCategoriesPageSwatches {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.pheakkornyMbmCategoriesPageSwatch {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--border-strong);
+  color: #fff;
+  transition: transform 0.1s ease;
+}
+.pheakkornyMbmCategoriesPageSwatch:hover {
+  transform: scale(1.12);
+}
+.pheakkornyMbmCategoriesPageSwatchOn {
+  box-shadow: 0 0 0 2px var(--text);
+}
+/* Rainbow "any color" swatch; the color input is invisible on top of it */
+.pheakkornyMbmCategoriesPageSwatchCustom {
+  position: relative;
+  cursor: pointer;
+  color: #fff;
+  background: conic-gradient(#ef4444, #eab308, #22c55e, #06b6d4, #3b82f6, #a855f7, #ec4899, #ef4444);
+}
+.pheakkornyMbmCategoriesPageSwatchCustom input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  cursor: pointer;
+}
+.pheakkornyMbmCategoriesPageSwatchCustom:focus-within {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (hover: none) {
+  .pheakkornyMbmCategoriesPageCatItemActions {
+    opacity: 1;
+  }
+}
+@media (max-width: 640px) {
+  .pheakkornyMbmCategoriesPageCatItem {
+    padding: 8px 8px 8px 16px;
+  }
+  .pheakkornyMbmCategoriesPageCatItemEdit,
+  .pheakkornyMbmCategoriesPageCatAdd {
+    padding: 14px 16px;
+  }
+  .pheakkornyMbmCategoriesPageSwatch {
+    width: 28px;
+    height: 28px;
+  }
+}

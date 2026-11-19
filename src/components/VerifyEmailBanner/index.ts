@@ -1,1 +1,0 @@
-export { VerifyEmailBanner } from './VerifyEmailBanner';

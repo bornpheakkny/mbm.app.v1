@@ -1,0 +1,26 @@
+.pheakkornyMbmUsageBarUsage {
+  height: 6px;
+  margin-top: 8px;
+  border-radius: var(--radius-full);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.pheakkornyMbmUsageBarFill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.5s var(--ease);
+}
+.pheakkornyMbmUsageBarOk {
+  background: var(--fill, var(--primary));
+}
+.pheakkornyMbmUsageBarNear {
+  background: #f59e0b;
+}
+/* Striped so "over budget" can't be confused with a red category */
+.pheakkornyMbmUsageBarOver {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--danger) 0 5px,
+    color-mix(in srgb, var(--danger) 55%, transparent) 5px 10px
+  );
+}

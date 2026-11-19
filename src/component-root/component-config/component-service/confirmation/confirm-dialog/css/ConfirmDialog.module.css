@@ -1,0 +1,9 @@
+.pheakkornyMbmConfirmDialogMessage {
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.pheakkornyMbmConfirmDialogMessage strong {
+  color: var(--text);
+}

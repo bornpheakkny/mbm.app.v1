@@ -1,1 +1,0 @@
-export { ChangeEmailModal } from './ChangeEmailModal';
