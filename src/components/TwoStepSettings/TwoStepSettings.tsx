@@ -110,13 +110,15 @@ export function TwoStepSettings({ recoveryCodesLeft: justUsed }: { recoveryCodes
                 <span className={styles.choiceDesc}>Google Authenticator, Microsoft Authenticator, Authy… Works offline.</span>
                 <span className={cx('pill pill--primary', styles.choiceTag)}>Recommended</span>
               </button>
-              <button className={styles.choice} disabled={!user.emailVerified} onClick={() => setDialog({ kind: 'setup', method: 'EMAIL' })}>
+              <button className={styles.choice} disabled={!user.email || !user.emailVerified} onClick={() => setDialog({ kind: 'setup', method: 'EMAIL' })}>
                 <span className={styles.choiceIcon}>
                   <Mail size={20} />
                 </span>
                 <span className={styles.choiceTitle}>Email code</span>
                 <span className={styles.choiceDesc}>
-                  {user.emailVerified ? `We email a 6-digit code to ${user.email}.` : 'Verify your email first to use this.'}
+                  {user.email && user.emailVerified
+                    ? `We email a 6-digit code to ${user.email}.`
+                    : 'Add and verify an email in your profile to use this.'}
                 </span>
               </button>
             </div>
@@ -128,11 +130,11 @@ export function TwoStepSettings({ recoveryCodesLeft: justUsed }: { recoveryCodes
         <TotpSetupDialog onClose={() => setDialog(null)} onEnabled={onEnabled} />
       )}
       {dialog?.kind === 'setup' && dialog.method === 'EMAIL' && (
-        <EmailSetupDialog email={user.email} onClose={() => setDialog(null)} onEnabled={onEnabled} />
+        <EmailSetupDialog email={user.email ?? ''} onClose={() => setDialog(null)} onEnabled={onEnabled} />
       )}
       {dialog?.kind === 'codes' && (
         <Modal title="Save your backup codes" icon={KeyRound} onClose={() => setDialog(null)}>
-          <RecoveryCodes codes={dialog.codes} email={user.email} />
+          <RecoveryCodes codes={dialog.codes} email={user.email ?? `@${user.username}`} />
           <ModalFooter>
             <button className="btn btn--primary" onClick={() => setDialog(null)}>
               I've saved them

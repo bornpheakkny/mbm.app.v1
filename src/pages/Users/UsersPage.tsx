@@ -91,7 +91,7 @@ export function UsersPage() {
       title: `Delete ${u.name}?`,
       message: (
         <>
-          This permanently deletes <strong>{u.email}</strong> and all of its budgets, categories and{' '}
+          This permanently deletes <strong>@{u.username}</strong> and all of its budgets, categories and{' '}
           {u.transactionCount} {u.transactionCount === 1 ? 'entry' : 'entries'}. This can't be undone.
         </>
       ),
@@ -195,7 +195,10 @@ export function UsersPage() {
                               {u.name}
                               {self && <span className="pill pill--primary">You</span>}
                             </div>
-                            <div className={styles.userCellEmail}>{u.email}</div>
+                            <div className={styles.userCellEmail}>
+                              @{u.username}
+                              {u.email ? ` · ${u.email}` : u.phone ? ` · ${u.phone}` : ''}
+                            </div>
                           </div>
                         </div>
                       </td>

@@ -1,16 +1,20 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { TOKEN_KEY } from '@/constants';
 import { authService } from '@/services';
-import type { AuthResponse, MfaChallenge, User } from '@/types';
+import type { RegisterInput } from '@/services/authService';
+import type { AuthResponse, MfaChallenge, User, VerificationChallenge } from '@/types';
 
 interface AuthState {
   user: User | null;
   loading: boolean;
-  /** Step 1. Resolves to an MFA challenge when a second step is needed, otherwise null (signed in). */
-  login: (email: string, password: string) => Promise<MfaChallenge | null>;
+  /** Step 1 (username, email or phone). Resolves to a verification or two-step challenge, or null when signed in. */
+  login: (identifier: string, password: string) => Promise<MfaChallenge | VerificationChallenge | null>;
+  /** Confirms the emailed/texted code. Resolves to a two-step challenge, or null when signed in. */
+  completeVerification: (verifyToken: string, code: string) => Promise<MfaChallenge | null>;
   /** Step 2. Resolves to the number of backup codes left when one was used. */
   completeMfa: (mfaToken: string, code: string) => Promise<number | undefined>;
-  register: (name: string, email: string, password: string, currency?: string) => Promise<void>;
+  /** Creates the account; resolves to the code challenge (the account works once the code is entered) */
+  register: (body: RegisterInput) => Promise<VerificationChallenge>;
   logout: () => void;
   setUser: (u: User) => void;
   /** Store a new session token (after a password change) */
@@ -41,8 +45,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = useCallback(
-    async (email: string, password: string) => {
-      const res = await authService.login(email, password);
+    async (identifier: string, password: string) => {
+      const res = await authService.login(identifier, password);
+      if ('mfaRequired' in res || 'verificationRequired' in res) return res;
+      startSession(res);
+      return null;
+    },
+    [startSession],
+  );
+
+  const completeVerification = useCallback(
+    async (verifyToken: string, code: string) => {
+      const res = await authService.verify(verifyToken, code);
       if ('mfaRequired' in res) return res;
       startSession(res);
       return null;
@@ -59,12 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [startSession],
   );
 
-  const register = useCallback(
-    async (name: string, email: string, password: string, currency?: string) => {
-      startSession(await authService.register({ name, email, password, currency }));
-    },
-    [startSession],
-  );
+  const register = useCallback((body: RegisterInput) => authService.register(body), []);
 
   const logout = useCallback(() => {
     localStorage.removeItem(TOKEN_KEY);
@@ -78,8 +87,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ user, loading, login, completeMfa, register, logout, setUser, setToken, refreshUser }),
-    [user, loading, login, completeMfa, register, logout, setToken, refreshUser],
+    () => ({ user, loading, login, completeVerification, completeMfa, register, logout, setUser, setToken, refreshUser }),
+    [user, loading, login, completeVerification, completeMfa, register, logout, setToken, refreshUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

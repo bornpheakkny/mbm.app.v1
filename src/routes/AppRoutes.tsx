@@ -5,6 +5,7 @@ import { BudgetPage } from '@/pages/Budget';
 import { CategoriesPage } from '@/pages/Categories';
 import { DashboardPage } from '@/pages/Dashboard';
 import { ForgotPasswordPage } from '@/pages/ForgotPassword';
+import { ForgotUsernamePage } from '@/pages/ForgotUsername';
 import { LoginPage } from '@/pages/Login';
 import { RegisterPage } from '@/pages/Register';
 import { ResetPasswordPage } from '@/pages/ResetPassword';
@@ -21,6 +22,7 @@ export function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/forgot-username" element={<ForgotUsernamePage />} />
       </Route>
 
       {/* Opened from email links — work signed in or out */}

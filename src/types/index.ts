@@ -4,7 +4,11 @@ export type Role = 'USER' | 'ADMIN';
 
 export interface User {
   id: string;
-  email: string;
+  /** Login name, lowercase */
+  username: string;
+  email: string | null;
+  /** E.164, e.g. +85512345678 */
+  phone: string | null;
   name: string;
   currency: string;
   role: Role;
@@ -12,10 +16,13 @@ export interface User {
   lastLoginAt: string | null;
   createdAt: string;
   emailVerified: boolean;
+  phoneVerified: boolean;
   /** null = two-step verification off */
   mfaMethod: MfaMethod | null;
   /** New address waiting for confirmation (Change email) */
   pendingEmail: string | null;
+  /** New phone number waiting for its SMS code */
+  pendingPhone: string | null;
   preferences: Preferences;
 }
 
@@ -38,7 +45,18 @@ export interface MfaChallenge {
   emailFailed?: boolean;
 }
 
-export type LoginResponse = AuthResponse | MfaChallenge;
+export type Channel = 'email' | 'sms';
+
+/** Account not verified yet: a 6-digit code was sent to the email or phone */
+export interface VerificationChallenge {
+  verificationRequired: true;
+  verifyToken: string;
+  channel: Channel;
+  /** Masked destination, e.g. "al***@gmail.com" or "+855 ••• ••• 678" */
+  hint: string;
+}
+
+export type LoginResponse = AuthResponse | MfaChallenge | VerificationChallenge;
 
 export interface MfaStatus {
   method: MfaMethod | null;
@@ -65,7 +83,9 @@ export interface AdminUserList {
 
 export interface AdminUserInput {
   name: string;
-  email: string;
+  username: string;
+  email?: string;
+  phone?: string;
   currency: string;
   role: Role;
   password?: string;

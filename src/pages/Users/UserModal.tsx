@@ -21,7 +21,9 @@ export function UserModal({
 }) {
   const [form, setForm] = useState({
     name: user?.name ?? '',
+    username: user?.username ?? '',
     email: user?.email ?? '',
+    phone: user?.phone ?? '',
     currency: user?.currency ?? 'USD',
     role: user?.role ?? ('USER' as Role),
     password: '',
@@ -29,7 +31,8 @@ export function UserModal({
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const roleLocked = Boolean(user?.isRoot || isSelf);
-  const emailChanged = Boolean(user && form.email.trim().toLowerCase() !== user.email);
+  const emailChanged = Boolean(user && form.email.trim() && form.email.trim().toLowerCase() !== user.email);
+  const phoneChanged = Boolean(user && form.phone.trim() && form.phone.trim() !== user.phone);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -39,7 +42,15 @@ export function UserModal({
     setBusy(true);
     setError(null);
     try {
-      const body = { name: form.name.trim(), email: form.email.trim(), currency: form.currency, role: form.role };
+      if (!form.email.trim() && !form.phone.trim()) throw new Error('Enter an email or a phone number');
+      const body = {
+        name: form.name.trim(),
+        username: form.username.trim().toLowerCase(),
+        ...(form.email.trim() && { email: form.email.trim() }),
+        ...(form.phone.trim() && { phone: form.phone.trim() }),
+        currency: form.currency,
+        role: form.role,
+      };
       if (user) {
         await adminService.updateUser(user.id, body);
         onSaved(`${body.name} was updated.`);
@@ -57,7 +68,9 @@ export function UserModal({
   return (
     <Modal
       title={user ? `Edit ${user.name}` : 'Add user'}
-      description={user ? undefined : 'They get their own private budget with the default categories.'}
+      description={
+        user ? undefined : 'They get their own private budget. They confirm their email or phone with a code at first login.'
+      }
       icon={user ? UserRoundPen : UserPlus}
       onClose={onClose}
     >
@@ -68,11 +81,31 @@ export function UserModal({
           <input required maxLength={80} value={form.name} onChange={set('name')} autoFocus />
         </label>
         <label className="field">
-          <span>Email</span>
-          <input type="email" required value={form.email} onChange={set('email')} disabled={user?.isRoot} />
-          {user?.isRoot && <span className="field__hint">The root admin email is set by ADMIN_EMAIL on the server.</span>}
-          {emailChanged && <span className="field__hint">They'll need to verify the new address.</span>}
+          <span>Username</span>
+          <input
+            required
+            minLength={3}
+            maxLength={30}
+            pattern="[a-z][a-z0-9._]{2,29}"
+            title="3–30 characters: letters, numbers, . or _ (starts with a letter)"
+            autoCapitalize="none"
+            value={form.username}
+            onChange={(e) => setForm((f) => ({ ...f, username: e.target.value.toLowerCase().replace(/\s/g, '') }))}
+          />
         </label>
+        <div className="form__row">
+          <label className="field">
+            <span>Email</span>
+            <input type="email" value={form.email} onChange={set('email')} disabled={user?.isRoot} placeholder="Optional if phone is set" />
+            {user?.isRoot && <span className="field__hint">Set by ADMIN_EMAIL on the server.</span>}
+            {emailChanged && <span className="field__hint">They'll need to verify it.</span>}
+          </label>
+          <label className="field">
+            <span>Phone</span>
+            <input type="tel" value={form.phone} onChange={set('phone')} placeholder="012 345 678" />
+            {phoneChanged && <span className="field__hint">They'll need to verify it.</span>}
+          </label>
+        </div>
         {!user && (
           <label className="field">
             <span>Temporary password</span>

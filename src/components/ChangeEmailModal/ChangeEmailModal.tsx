@@ -31,11 +31,17 @@ export function ChangeEmailModal({ onClose, onSent }: { onClose: () => void; onS
 
   return (
     <Modal
-      title={user?.emailVerified ? 'Change email' : 'Fix your email address'}
+      title={!user?.email ? 'Add an email' : user.emailVerified ? 'Change email' : 'Fix your email address'}
       description={
         <>
-          Currently <strong>{user?.email}</strong>. Your email only changes after you click the link we send to the new
-          address.
+          {user?.email ? (
+            <>
+              Currently <strong>{user.email}</strong>. Your email only changes after you click the link we send to the new
+              address.
+            </>
+          ) : (
+            'We will send a confirmation link to the address.'
+          )}
         </>
       }
       icon={Mail}

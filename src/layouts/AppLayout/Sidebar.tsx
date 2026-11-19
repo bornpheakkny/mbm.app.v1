@@ -49,7 +49,7 @@ export function Sidebar({ onClose }: { onClose: () => void }) {
                 <span className={styles.userNameText}>{user.name}</span>
                 {user.role === 'ADMIN' && <span className={cx('pill pill--violet', styles.role)}>Admin</span>}
               </span>
-              <span className={styles.userEmail}>{user.email}</span>
+              <span className={styles.userEmail}>@{user.username}</span>
             </div>
           </NavLink>
           <button

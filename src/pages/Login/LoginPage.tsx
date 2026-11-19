@@ -1,22 +1,24 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { Eye, EyeOff, Lock, UserRound } from 'lucide-react';
 import { Alert } from '@/components/Alert';
+import { VerifyContactStep } from '@/components/VerifyContactStep';
 import { useAuth } from '@/context/AuthContext';
 import { AuthFooter, AuthLayout } from '@/layouts/AuthLayout';
 import { errorMessage } from '@/services';
-import type { MfaChallenge } from '@/types';
+import type { MfaChallenge, VerificationChallenge } from '@/types';
 import { MfaStep } from './MfaStep';
 
 export function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state as { from?: string; notice?: string } | null;
-  const [email, setEmail] = useState('');
+  const state = location.state as { from?: string; notice?: string; identifier?: string } | null;
+  const [identifier, setIdentifier] = useState(state?.identifier ?? '');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
-  const [challenge, setChallenge] = useState<MfaChallenge | null>(null);
+  const [verify, setVerify] = useState<VerificationChallenge | null>(null);
+  const [mfa, setMfa] = useState<MfaChallenge | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -31,9 +33,10 @@ export function LoginPage() {
     setBusy(true);
     setError(null);
     try {
-      const next = await login(email, password);
-      if (next) setChallenge(next);
-      else done();
+      const next = await login(identifier.trim(), password);
+      if (!next) done();
+      else if ('verificationRequired' in next) setVerify(next);
+      else setMfa(next);
     } catch (err) {
       setError(errorMessage(err));
     } finally {
@@ -41,8 +44,22 @@ export function LoginPage() {
     }
   }
 
-  if (challenge) {
-    return <MfaStep challenge={challenge} onBack={() => setChallenge(null)} onDone={done} />;
+  if (mfa) {
+    return <MfaStep challenge={mfa} onBack={() => setMfa(null)} onDone={done} />;
+  }
+  if (verify) {
+    return (
+      <VerifyContactStep
+        challenge={verify}
+        title="Confirm your account"
+        onBack={() => setVerify(null)}
+        onDone={() => done()}
+        onMfa={(m) => {
+          setVerify(null);
+          setMfa(m);
+        }}
+      />
+    );
   }
 
   return (
@@ -50,13 +67,29 @@ export function LoginPage() {
       <form className="form" onSubmit={onSubmit}>
         {state?.notice && !error && <Alert tone="success">{state.notice}</Alert>}
         {error && <Alert>{error}</Alert>}
-        <label className="field">
-          <span>Email</span>
-          <span className="input-icon">
-            <Mail size={16} />
-            <input type="email" autoComplete="email" required autoFocus placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className="field">
+          <span className="field__label-row">
+            <label htmlFor="login-identifier" className="field__label">
+              Username, email or phone
+            </label>
+            <Link to="/forgot-username" className="small">
+              Forgot username?
+            </Link>
           </span>
-        </label>
+          <span className="input-icon">
+            <UserRound size={16} />
+            <input
+              id="login-identifier"
+              autoComplete="username"
+              required
+              autoFocus
+              autoCapitalize="none"
+              spellCheck={false}
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+            />
+          </span>
+        </div>
         <div className="field">
           <span className="field__label-row">
             <label htmlFor="login-password" className="field__label">
@@ -76,7 +109,12 @@ export function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="button" className="icon-btn icon-btn--sm input-icon__end" aria-label={show ? 'Hide password' : 'Show password'} onClick={() => setShow((s) => !s)}>
+            <button
+              type="button"
+              className="icon-btn icon-btn--sm input-icon__end"
+              aria-label={show ? 'Hide password' : 'Show password'}
+              onClick={() => setShow((s) => !s)}
+            >
               {show ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </span>

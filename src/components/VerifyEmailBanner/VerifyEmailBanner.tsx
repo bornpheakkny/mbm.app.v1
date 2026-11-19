@@ -18,7 +18,7 @@ export function VerifyEmailBanner() {
   const [busy, setBusy] = useState(false);
   const [changing, setChanging] = useState(false);
   const [hidden, setHidden] = useState(false);
-  if (!user || hidden || (user.emailVerified && !user.pendingEmail)) return null;
+  if (!user || hidden || (!user.pendingEmail && (!user.email || user.emailVerified))) return null;
 
   const pending = user.pendingEmail;
 

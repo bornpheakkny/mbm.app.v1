@@ -66,7 +66,7 @@ function UserMenu() {
             <Avatar name={user.name} />
             <div className={styles.menuWho}>
               <strong>{user.name}</strong>
-              <span>{user.email}</span>
+              <span>@{user.username}</span>
             </div>
           </div>
           <Link to="/account" role="menuitem" className={styles.menuItem} onClick={() => setOpen(false)}>

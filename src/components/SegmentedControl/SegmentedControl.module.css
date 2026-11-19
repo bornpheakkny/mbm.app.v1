@@ -7,6 +7,13 @@
   border: 1px solid var(--border);
   max-width: 100%;
 }
+.block {
+  display: flex;
+  width: 100%;
+}
+.block .option {
+  flex: 1;
+}
 .option {
   display: inline-flex;
   align-items: center;

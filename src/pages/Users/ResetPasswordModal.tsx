@@ -38,7 +38,7 @@ export function ResetPasswordModal({ user, onClose, onDone }: { user: AdminUser;
         <label className="field">
           <span>New password</span>
           <input type="text" required minLength={8} autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} autoFocus placeholder="At least 8 characters" />
-          <span className="field__hint">Share it with {user.email}.</span>
+          <span className="field__hint">Share it with @{user.username}.</span>
         </label>
         <ModalFooter>
           <button type="button" className="btn btn--secondary" onClick={onClose}>

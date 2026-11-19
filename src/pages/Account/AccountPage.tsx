@@ -26,16 +26,25 @@ export function AccountPage() {
         <Avatar name={user.name} size="lg" />
         <div className={styles.accountHeroText}>
           <h2>{user.name}</h2>
-          <span className="muted">{user.email}</span>
+          <span className="muted">
+            @{user.username}
+            {user.email ? ` · ${user.email}` : user.phone ? ` · ${user.phone}` : ''}
+          </span>
         </div>
         <div className={styles.accountHeroTags}>
-          {user.emailVerified ? (
+          {user.email &&
+            (user.emailVerified ? (
+              <span className="pill pill--success">
+                <BadgeCheck /> Email verified
+              </span>
+            ) : (
+              <span className="pill pill--warning">
+                <MailWarning /> Email not verified
+              </span>
+            ))}
+          {user.phone && user.phoneVerified && (
             <span className="pill pill--success">
-              <BadgeCheck /> Email verified
-            </span>
-          ) : (
-            <span className="pill pill--warning">
-              <MailWarning /> Email not verified
+              <BadgeCheck /> Phone verified
             </span>
           )}
           {user.role === 'ADMIN' && (

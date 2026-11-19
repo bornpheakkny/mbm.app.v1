@@ -16,12 +16,15 @@ export function SegmentedControl<T extends string>({
   options,
   'aria-label': ariaLabel,
   disabled,
+  block,
 }: {
   value: T;
   onChange: (value: T) => void;
   options: Segment<T>[];
   'aria-label': string;
   disabled?: boolean;
+  /** Stretch to the full width with equal-width options */
+  block?: boolean;
 }) {
   const name = useId();
 
@@ -36,7 +39,7 @@ export function SegmentedControl<T extends string>({
   }
 
   return (
-    <div className={styles.group} role="radiogroup" aria-label={ariaLabel} onKeyDown={onKeyDown}>
+    <div className={cx(styles.group, block && styles.block)} role="radiogroup" aria-label={ariaLabel} onKeyDown={onKeyDown}>
       {options.map(({ value: v, label, icon: Icon }) => {
         const on = v === value;
         return (
